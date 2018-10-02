@@ -8,8 +8,8 @@
 public class Dealer
 {
     // instance variables - replace the example below with your own
-    private int x;
-
+    private ficha[] mazo;
+        
     /**
      * Constructor for objects of class Dealer
      */
@@ -17,6 +17,8 @@ public class Dealer
     {
         // initialise instance variables
         x = 0;
+        
+        for(int i=0;i<mazo.length;)
     }
 
     /**
