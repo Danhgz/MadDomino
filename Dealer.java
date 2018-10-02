@@ -7,27 +7,24 @@
  */
 public class Dealer
 {
-    // instance variables - replace the example below with your own
-    private int x;
-
+    private Ficha [] mazo;
+   
     /**
      * Constructor for objects of class Dealer
      */
-    public Dealer()
-    {
-        // initialise instance variables
-        x = 0;
+    public Dealer(){
+    }
+    
+    private void init(){
+        mazo = new Ficha[28];
+        int izq  = 0;
+        for(int i = 0;i<mazo.length;++i){
+            for(int j = izq;i<=6;j++){
+                mazo[i].setIzq(izq);
+                mazo[i].setDer(j);
+            }
+            ++izq;
+        }
     }
 
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
-    }
 }
