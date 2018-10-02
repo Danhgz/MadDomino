@@ -1,9 +1,12 @@
 /**
- * Write a description of class Main here.
- *
- * @author (your name)
- * @version (a version number or a date)
+ * Ejecuta el juego lol
+ * 
+ * @author Daniel Henao "el cacas"
+ * @author Mauricio Delgado "conejita mala"
+ * @author Allan Barrantes "alambrito"
+ * @version 0.0
  */
+
 public class Main
 {
     public static void main(String[] args)
