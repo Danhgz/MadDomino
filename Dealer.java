@@ -1,4 +1,3 @@
-
 /**
  * Write a description of class Dealer here.
  *
@@ -20,18 +19,17 @@ public class Dealer
     
     private void init(){
         mazo = new Ficha[28];
-        repetido = new boolean[28];
-        int pos = 0;
+        repetido = new boolean[28];        
         int izq = 0;        
-        for(int i = 0; i < mazo.length;++i){
-            
+        for(int i = 0; i < mazo.length;++i)
+        {         
             for(int j = izq; j <= 6 ; ++j){
-                    mazo[pos] = new Ficha();
-                    mazo[pos].setIzq(izq);
-                    mazo[pos].setDer(j);
-                    ++pos;
+                    mazo[i] = new Ficha();
+                    mazo[i].setIzq(izq);
+                    mazo[i].setDer(j);
+                    ++i;
             }
-            
+            --i;
             ++izq;
         }
     }
