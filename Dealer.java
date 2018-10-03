@@ -1,3 +1,4 @@
+
 /**
  * Write a description of class Dealer here.
  *
@@ -46,5 +47,4 @@ public class Dealer
         repetido[numFicha]= true;        
         return mazo[numFicha];
     }
-   
 }
