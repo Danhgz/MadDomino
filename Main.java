@@ -9,8 +9,12 @@
 
 public class Main
 {
+  
     public static void main(String[] args)
     {
-        // pos el mein jaja k mas?
+        Dealer dealer = new Dealer();
+        for(int i = 0; i < 28; ++i){
+            System.out.println(dealer.repartir());
+        }
     }
 }
