@@ -46,6 +46,7 @@ public class Domino
         System.exit(0);
     }    
     
+
     public void correr1v1(){
         int caso;
         jugador = interfaz.imprimirMenuVersus(jugador);

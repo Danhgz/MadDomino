@@ -24,6 +24,7 @@ public class Interfaz{
         return input.next();                       
     }
 
+
     //metodo para imprimir el menu de juego en consola.
     public String[] imprimirMenuVersus(String[] actual){
            
@@ -36,6 +37,7 @@ public class Interfaz{
                             "(Digite S para salir)                                  \n"+
                             " Digite el "+(numJugador+1)+" jugador                     \n\n"+
   
+
                             " 1. Humano                                              \n"+
                             " 2. Allanbrito                                          \n"+
                             " 3. Henao                                               \n"+
@@ -103,7 +105,7 @@ public class Interfaz{
     }
 
     public void digiteOpcion(boolean err){//Para ahorrar codigo
-    
+
        if(err){
            System.out.print("  -Error! Digite una una opcion valida: ");
        }       
