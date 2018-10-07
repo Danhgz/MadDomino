@@ -58,12 +58,30 @@ public class Interfaz{
         }
         return jugador;
     }
-
+    
+    public void imprimirTablero(Ficha[] tablero,int ocupado)
+    {
+        for(int i=0;i<ocupado;++i){
+            if(tablero[i].getEsPar())
+            {
+                System.out.print(" *---*"+
+                                 " | "+tablero[i].getIzq()+" |"+
+                                 " |---|"+
+                                 " | "+tablero[i].getDer()+" |"+
+                                 " *---*");
+            }
+            else{
+                System.out.print(" *-------*"+
+                                 " | "+tablero[i].getIzq()+" | "+tablero[i].getDer()+" |"+
+                                 " *-------*");
+            }
+        }
+    }
 
     public void digiteOpcion(boolean err)//Para ahorrar codigo
     {
        if(err){
-           System.out.print("  -Error! Digite una una opcion valida: ");
+           System.out.print("  -Error! Digite una opcion valida: ");
        }       
        else{
            System.out.print("  -Digite la opcion que desea: ");

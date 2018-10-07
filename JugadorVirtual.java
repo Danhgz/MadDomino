@@ -26,12 +26,16 @@ public class JugadorVirtual
         this.baraja[i].setDer(ficha.getDer());
     }
     
+    public int getPuntaje(){
+        return this.puntaje;
+    }
+    
     //Verifica si tiene una ficha par
     public boolean tienePar(){
         boolean existe = false;
         int i = 0;
         while(i < 7 && !existe){
-            existe = baraja[i].getIzq() == baraja[i].getDer() && baraja[i].getIzq() == i;
+            existe = baraja[i].getIzq() == baraja[i].getDer();
             i++;
         }
         

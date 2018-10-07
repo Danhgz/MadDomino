@@ -10,6 +10,7 @@ public class Ficha
     // instance variables - replace the example below with your own
     private int izq;
     private int der;
+    private boolean esPar;
     private Icon [] ficha;
     
     public void setIzq(int izq){
@@ -18,7 +19,8 @@ public class Ficha
     
     public void setDer(int der){
         this.der = der;
-    }
+        esPar= this.izq == this.der; //lo metí aqui porque es vara hacer un setEsPar xd
+    }    
     
     public int getIzq(){
         return this.izq;
@@ -28,11 +30,25 @@ public class Ficha
         return this.der;
     }
     
+    public boolean getEsPar(){
+        return this.esPar;
+    }
+    
     public Ficha(Ficha otra){
-        this.izq = otra.getIzq();
-        this.der = otra.getDer();
+        init(otra.getIzq(),otra.getDer());
+    }
+    
+    public Ficha(int izq,int der){
+        init(izq,der);
     }
     
     public Ficha(){
+    }
+    
+    private void init(int izq, int der)
+    {
+        this.izq = izq;
+        this.der = der;
+        esPar= this.izq == this.der;
     }
 }
