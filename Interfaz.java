@@ -35,9 +35,9 @@ public class Interfaz
        String jugadorAux;
        do
        {
-           System.out.print("~~~~~~~~~~~~~~~~~~~PARTIDA VERSUS~~~~~~~~~~~~~~~~~~~~~\n\n"+ 
-                            "(Digite S para salir)                                  \n"+
-                            " Digite el "+(numJugador+1)+" jugador                     \n\n"+
+           System.out.print("~~~~~~~~~~~~~~~~~~~PARTIDA VERSUS~~~~~~~~~~~~~~~~~~~~~\n"+ 
+                            "(Digite S para salir)                                  \n\n"+
+                            " Digite el "+(numJugador+1)+" jugador                   \n"+
                             " 1. Humano                                              \n"+
                             " 2. Allanbrito                                          \n"+
                             " 3. Henao                                               \n"+
@@ -57,47 +57,6 @@ public class Interfaz
     return jugador;
    }
    
-   public int modificarRondas()
-    // metodo para determinar el numero de rondas en la partida. 
-    {
-        int rondas = 0;    
-        boolean err= false;
-        boolean modificado=false;
-        String rondasAux;
-        do
-        {
-            System.out.print('\u000C');
-            System.out.print("~~~~~~~~~~~~~~~~~~~~~~~HELIO GAME~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-            if(err){
-                System.out.print(" Error! Digite un numero entero positivo o \"S\" para salir\n\n");
-            }
-            else{
-                System.out.print(" (Digite S para salir)\n\n");
-            }
-            System.out.print(" -Digite la cantidad de rondas por partida: ");
-            rondasAux= input.next();
-            if(rondasAux.matches("^[0-9]+$") && !rondasAux.matches("^0+$")){
-                rondas = Integer.parseInt(rondasAux);
-                modificado= true;
-            }   
-            else{
-                err=true;
-            }
-            if(modificado) //Mensaje de confirmacion de cambio
-            {
-                try
-                {
-                    System.out.print('\u000C');
-                    System.out.print("~~~~~~~~~~~~~~~~~~~~~~~HELIO GAME~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n"+
-                                     "          -- Cambio realizado exitosamente! --\n");
-                    Thread.sleep(1250);
-                }
-                catch(Exception e){
-                }
-            }
-        }while(!((rondasAux.matches("^[0-9]+$") && !rondasAux.matches("^0+$"))|| rondasAux.equalsIgnoreCase("s")));
-        return rondas;
-    }
    
    public void digiteOpcion(boolean err)//Para ahorrar codigo
    {

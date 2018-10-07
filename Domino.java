@@ -8,12 +8,15 @@ public class Domino
 {
     private Dummy dummy;
     private Interfaz interfaz;
-    private JugadorVirtual ia;
+    private Dealer dealer;
+    private JugadorVirtual jugador1;
+    private JugadorVirtual jugador2;
     private String[] jugador;
     
     public Domino()
     {
         interfaz = new Interfaz();
+        dealer = new Dealer();
         jugador = new String[2];
     }
 
@@ -21,8 +24,7 @@ public class Domino
     {
         String op;
         boolean err = false;
-        do
-        {
+        do{
             op = interfaz.imprimirMenuPrincipal(err);
             err = false;
             switch(op)
@@ -48,9 +50,21 @@ public class Domino
     
     public void correr1v1()
     {
+        int caso;
         jugador = interfaz.imprimirMenuVersus(jugador);
-        //  ia = new JugadorVirtual("Mr.Brito");
-        //  ia.pedirBaraja();
+        jugador1 = new JugadorVirtual(jugador[0]);
+        jugador2 = new JugadorVirtual(jugador[1]);
+        do{ //¿?
+            jugador1.pedirBaraja();
+            jugador2.pedirBaraja();
+            caso=dealer.pedirInicio(jugador1.parMasAlto(),jugador2.parMasAlto());
+        }while(caso==0);
+        if(caso==1){
+            //empieza el j1 poniendo su par mas alto
+        }
+        else{
+            //empieza el j2 poniendo su par mas alto
+        }
     }
     
     public void correrTorneo()
