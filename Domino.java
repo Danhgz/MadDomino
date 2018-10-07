@@ -59,6 +59,8 @@ public class Domino
         
         repartirBarajas();
         
+        tablero[0] = new Ficha(sacarPrimeraFicha());
+        
     }
     
     //Reparte las barajas hasta que alguno tenga un par e iniciar la partida
@@ -77,6 +79,23 @@ public class Domino
         
     }
   
+    private Ficha sacarPrimeraFicha(){
+        boolean esPar = false;
+        int i = 0;
+        Ficha primerFicha = new Ficha();
+        
+        while(!esPar && i < 7){
+            if(jugador1.getFicha(i).getIzq() == jugador1.getFicha(i).getDer() && jugador1.getFicha(i).getIzq() == i){
+                jugador1.sacarFicha(i);
+                primerFicha = new Ficha(jugador1.getFicha(i));
+            }
+            else if(jugador2.getFicha(i).getIzq() == jugador2.getFicha(i).getDer() && jugador2.getFicha(i).getIzq() == i){
+                jugador2.sacarFicha(i);
+                 primerFicha = new Ficha(jugador2.getFicha(i));
+            }
+        }
+        return primerFicha;
+    }
     
     public void correrTorneo()  {
         //  laspatasdeMauro.repartir(); 

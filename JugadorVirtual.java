@@ -41,6 +41,10 @@ public class JugadorVirtual
         baraja[i] = null;
     }
     
+    public Ficha getFicha(int i){
+        return baraja[i];
+    }
+    
     /*public void comer()
     {
         Ficha[] barajaAux = new Ficha[baraja.length+1];
@@ -62,16 +66,4 @@ public class JugadorVirtual
         }
     }*/
     
-    public int parMasAlto()
-    {
-        int par = -1;
-        for(int i=0; i<baraja.length; ++i)
-        {
-            if(baraja[i].getIzq()==baraja[i].getDer()&&baraja[i].getIzq()>par)
-            {
-                par= baraja[i].getIzq();
-            }
-        }
-        return par;
-    }   
 }
