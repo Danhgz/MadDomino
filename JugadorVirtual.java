@@ -7,7 +7,7 @@
 public class JugadorVirtual
 {
     private Ficha[] baraja;
-    
+    private int puntaje;
     //CONSTRUCTOR
     public JugadorVirtual(String jugador){
         init();
@@ -15,6 +15,7 @@ public class JugadorVirtual
     
     public void init(){
         baraja = new Ficha[7]; 
+        puntaje = 0;
         for(int i = 0; i < baraja.length ; ++i){
             baraja[i] = new Ficha();
         }
