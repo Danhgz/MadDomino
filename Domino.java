@@ -86,13 +86,15 @@ public class Domino
         
         while(!esPar && i < 7){
             if(jugador1.getFicha(i).getIzq() == jugador1.getFicha(i).getDer() && jugador1.getFicha(i).getIzq() == i){
-                jugador1.sacarFicha(i);
                 primerFicha = new Ficha(jugador1.getFicha(i));
+                jugador1.sacarFicha(i);
+               
             }
             else if(jugador2.getFicha(i).getIzq() == jugador2.getFicha(i).getDer() && jugador2.getFicha(i).getIzq() == i){
+                primerFicha = new Ficha(jugador2.getFicha(i));
                 jugador2.sacarFicha(i);
-                 primerFicha = new Ficha(jugador2.getFicha(i));
             }
+            ++i;
         }
         return primerFicha;
     }
