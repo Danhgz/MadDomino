@@ -46,6 +46,12 @@ public class Dealer
         return mazo[numFicha];
     }
     
+    public void repartirBarajaInicial(JugadorVirtual jugador){
+        for(int i = 0; i< 7; ++i){
+            jugador.setFicha(repartir(),i);
+        }
+    }
+    
     public int pedirInicio(int j1, int j2)
     {
         int caso;

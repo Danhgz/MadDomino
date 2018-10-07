@@ -12,11 +12,13 @@ public class Domino
     private JugadorVirtual jugador1;
     private JugadorVirtual jugador2;
     private String[] jugador;
+    private Ficha[] tablero; 
     
     public Domino() {
         interfaz = new Interfaz();
         dealer = new Dealer();
         jugador = new String[2];
+        tablero = new Ficha[28];
     }
 
     public void ejecutar() {
@@ -48,22 +50,33 @@ public class Domino
     
 
     public void correr1v1(){
+        
         int caso;
-        jugador = interfaz.imprimirMenuVersus(jugador);
+        
+        jugador =  interfaz.imprimirMenuVersus(jugador);
         jugador1 = new JugadorVirtual(jugador[0]);
         jugador2 = new JugadorVirtual(jugador[1]);
-        do{ //¿?
-            jugador1.pedirBaraja();
-            jugador2.pedirBaraja();
-            caso=dealer.pedirInicio(jugador1.parMasAlto(),jugador2.parMasAlto());
-        }while(caso==0);
-        if(caso==1){
-            //empieza el j1 poniendo su par mas alto
-        }
-        else{
-            //empieza el j2 poniendo su par mas alto
-        }
+        
+        repartirBarajas();
+        
     }
+    
+    //Reparte las barajas hasta que alguno tenga un par e iniciar la partida
+    public void repartirBarajas(){
+       
+        boolean par = false;
+        
+        do{
+       
+            dealer.repartirBarajaInicial(jugador1);
+            dealer.repartirBarajaInicial(jugador2);    
+            
+            par = jugador1.tienePar() || jugador2.tienePar();
+       
+        }while(!par);
+        
+    }
+  
     
     public void correrTorneo()  {
         //  laspatasdeMauro.repartir(); 
