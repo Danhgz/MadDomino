@@ -21,7 +21,8 @@ public class JugadorVirtual
     }
     
     public void setFicha(Ficha ficha, int i){
-        this.baraja[i] = ficha;
+        this.baraja[i].setIzq(ficha.getIzq());
+        this.baraja[i].setDer(ficha.getDer());
     }
     
     //Verifica si tiene una ficha par
