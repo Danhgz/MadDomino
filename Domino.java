@@ -9,40 +9,46 @@ public class Domino
     private Dummy dummy;
     private Interfaz interfaz;
     private JugadorVirtual ia;
-
+    private String[] jugador;
+    
     public Domino()
     {
         interfaz = new Interfaz();
+        jugador = new String[2];
     }
 
     public void ejecutar()
     {
-        int op = 0;
+        String op;
+        boolean err = false;
         do
         {
-            // op=interfaz.elegirModoDeJuego();
+            op = interfaz.imprimirMenuPrincipal(err);
+            err = false;
             switch(op)
             {
-                case 1:
-                    correr1v1();
-                    break;
-                
-                case 2:
-                    correrTorneo();
-                    break;
-                
-                case 3:
-                    break;
-                
+                case "1":
+                correr1v1();
+                break;
+
+                case "2":
+                correrTorneo();
+                break;                
+
+                case "3":   
+                System.out.println("~~~~~~~~~~~~ Gracias por jugar, hasta luego! :) ~~~~~~~~~~~");
+                break;                 
+
                 default:
-                    //mensaje de error
+                err = true;                        
             }
-        }while(op!=3);
+        }while(!op.equals("3"));
+        System.exit(0);
     }    
     
     public void correr1v1()
     {
-        //  interfaz.elegirJugadores();
+        jugador = interfaz.imprimirMenuVersus(jugador);
         //  ia = new JugadorVirtual("Mr.Brito");
         //  ia.pedirBaraja();
     }
