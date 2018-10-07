@@ -28,8 +28,11 @@ public class Ficha
         return this.der;
     }
     
-    public Ficha(){
-        
+    public Ficha(Ficha otra){
+        this.izq = otra.getIzq();
+        this.der = otra.getDer();
     }
-
+    
+    public Ficha(){
+    }
 }

@@ -12,16 +12,16 @@ public class Domino
     private JugadorVirtual jugador1;
     private JugadorVirtual jugador2;
     private String[] jugador;
+    private Ficha[] tablero; 
     
-    public Domino()
-    {
+    public Domino() {
         interfaz = new Interfaz();
         dealer = new Dealer();
         jugador = new String[2];
+        tablero = new Ficha[28];
     }
 
-    public void ejecutar()
-    {
+    public void ejecutar() {
         String op;
         boolean err = false;
         do{
@@ -48,27 +48,56 @@ public class Domino
         System.exit(0);
     }    
     
-    public void correr1v1()
-    {
+
+    public void correr1v1(){
+        
         int caso;
-        jugador = interfaz.imprimirMenuVersus(jugador);
+        
+        jugador =  interfaz.imprimirMenuVersus(jugador);
         jugador1 = new JugadorVirtual(jugador[0]);
         jugador2 = new JugadorVirtual(jugador[1]);
-        do{ //¿?
-            jugador1.pedirBaraja();
-            jugador2.pedirBaraja();
-            caso=dealer.pedirInicio(jugador1.parMasAlto(),jugador2.parMasAlto());
-        }while(caso==0);
-        if(caso==1){
-            //empieza el j1 poniendo su par mas alto
-        }
-        else{
-            //empieza el j2 poniendo su par mas alto
-        }
+        
+        repartirBarajas();
+        
+        tablero[0] = new Ficha(sacarPrimeraFicha());
+        
     }
     
-    public void correrTorneo()
-    {
+    //Reparte las barajas hasta que alguno tenga un par e iniciar la partida
+    public void repartirBarajas(){
+       
+        boolean par = false;
+        
+        do{
+       
+            dealer.repartirBarajaInicial(jugador1);
+            dealer.repartirBarajaInicial(jugador2);    
+            
+            par = jugador1.tienePar() || jugador2.tienePar();
+       
+        }while(!par);
+        
+    }
+  
+    private Ficha sacarPrimeraFicha(){
+        boolean esPar = false;
+        int i = 0;
+        Ficha primerFicha = new Ficha();
+        
+        while(!esPar && i < 7){
+            if(jugador1.getFicha(i).getIzq() == jugador1.getFicha(i).getDer() && jugador1.getFicha(i).getIzq() == i){
+                jugador1.sacarFicha(i);
+                primerFicha = new Ficha(jugador1.getFicha(i));
+            }
+            else if(jugador2.getFicha(i).getIzq() == jugador2.getFicha(i).getDer() && jugador2.getFicha(i).getIzq() == i){
+                jugador2.sacarFicha(i);
+                 primerFicha = new Ficha(jugador2.getFicha(i));
+            }
+        }
+        return primerFicha;
+    }
+    
+    public void correrTorneo()  {
         //  laspatasdeMauro.repartir(); 
     }
 }
