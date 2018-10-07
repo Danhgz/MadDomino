@@ -15,8 +15,7 @@ public class Interfaz{
     
     //metodo para imprimir el menu inicial del juego en consola. 
     public String imprimirMenuPrincipal(boolean err){ 
-   
-                   
+             
         System.out.print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~DOMINO~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n"+
                         " 1. Jugar partida 1 vs. 1                                       \n"+
                         " 2. Jugar Torneo                                                \n"+
@@ -27,7 +26,6 @@ public class Interfaz{
 
     //metodo para imprimir el menu de juego en consola.
     public String[] imprimirMenuVersus(String[] actual){
-     
            
         String[] jugador = {"0","0"};
         boolean err=false;
@@ -37,6 +35,7 @@ public class Interfaz{
             System.out.print("~~~~~~~~~~~~~~~~~~~PARTIDA VERSUS~~~~~~~~~~~~~~~~~~~~~\n\n"+ 
                             "(Digite S para salir)                                  \n"+
                             " Digite el "+(numJugador+1)+" jugador                     \n\n"+
+  
                             " 1. Humano                                              \n"+
                             " 2. Allanbrito                                          \n"+
                             " 3. Henao                                               \n"+
@@ -57,7 +56,7 @@ public class Interfaz{
         }
         return jugador;
     }
-    
+
     // metodo para determinar el numero de rondas en la partida.
     public int modificarRondas(){
         int rondas = 0;    
@@ -102,7 +101,7 @@ public class Interfaz{
         }while(!((rondasAux.matches("^[0-9]+$") && !rondasAux.matches("^0+$"))|| rondasAux.equalsIgnoreCase("s")));
         return rondas;
     }
-   
+
     public void digiteOpcion(boolean err){//Para ahorrar codigo
     
        if(err){
