@@ -1,4 +1,3 @@
-
 /**
  * Write a description of class Dummy here.
  * 
@@ -6,12 +5,9 @@
  * @version (a version number or a date)
  */
 public class Dummy
-{
-    
+{   
     public Dummy()
     {
        
-    }
-
-   
+    }  
 }
