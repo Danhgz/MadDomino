@@ -13,6 +13,7 @@ public class Domino
     private JugadorVirtual jugador2;
     private String[] jugador;
     private Ficha[] tablero; 
+    
     private int ocupado; //Cantidad de espacios ocupados en el tablero
     
     public Domino() {
@@ -23,6 +24,7 @@ public class Domino
         ocupado = 0;
     }
 
+    
     public void ejecutar() {
         String op;
         boolean err = false;
@@ -102,6 +104,7 @@ public class Domino
         }
         return primerFicha;
     }*/
+    
             //Civil War 
    public Ficha sacarPrimeraFicha(){
         boolean esPar = false;
@@ -127,7 +130,7 @@ public class Domino
     //Ordena el vector para que se pueda insertar una ficha a la izquierda (en la posicion 0)
     private void ordenarTablero(Ficha ficha)
     {
-        for(int i=ocupado;i>=0;++i)
+        for(int i=ocupado;i>=0;--i)
         {
             tablero[i+1] = new Ficha(tablero[i]);
         }
