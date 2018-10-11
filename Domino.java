@@ -78,17 +78,17 @@ public class Domino
         }while(!par);        
     }
     
-    /*private Ficha sacarPrimeraFicha(){
+    private Ficha sacarPrimeraFicha(){
         Ficha primerFicha = new Ficha(-1,-1); 
         int pos=0;
         int dueno=0;
         for(int i=0;i<7;++i){                       
-            if(jugador1.getFicha(i).getIzq() == jugador1.getFicha(i).getDer()&& jugador1.getFicha(i).getIzq()>primerFicha.getIzq()){
+            if(jugador1.getFicha(i).getEsPar()&& jugador1.getFicha(i).getIzq()>primerFicha.getIzq()){
                 primerFicha = new Ficha(jugador1.getFicha(i));
                 pos= i;
                 dueno=1;
             }
-            if(jugador2.getFicha(i).getIzq() == jugador2.getFicha(i).getDer()&& jugador2.getFicha(i).getIzq()>primerFicha.getIzq()){
+            if(jugador2.getFicha(i).getEsPar()&& jugador2.getFicha(i).getIzq()>primerFicha.getIzq()){
                 primerFicha = new Ficha(jugador2.getFicha(i)); 
                 pos= i;
                 dueno=2;
@@ -103,10 +103,10 @@ public class Domino
             jugador2.sacarFicha(pos);
         }
         return primerFicha;
-    }*/
+    }
     
             //Civil War 
-   public Ficha sacarPrimeraFicha(){
+   /*public Ficha sacarPrimeraFicha(){
         boolean esPar = false;
         int i = 0;
         Ficha primerFicha = new Ficha();
@@ -125,7 +125,7 @@ public class Domino
             ++i;
         }
         return primerFicha;
-    }
+    }*/
     
     //Ordena el vector para que se pueda insertar una ficha a la izquierda (en la posicion 0)
     private void ordenarTablero(Ficha ficha)
