@@ -36,10 +36,7 @@ public class Virtual2 implements Jugador
         return new String[]{"a","a"};
     }
     
-    public String[] hacerJugada(int pos)
-    {
-        return new String[]{"",""};
-    }
+    
     
     //Verifica si tiene una ficha par
     public boolean tienePar(){

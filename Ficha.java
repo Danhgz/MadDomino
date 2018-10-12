@@ -51,4 +51,11 @@ public class Ficha
         this.der = der;
         esPar= this.izq == this.der;
     }
+    
+    public void swap(){
+        int temp = this.izq;
+        der = izq;
+        izq = temp;
+    }
+    
 }

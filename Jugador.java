@@ -21,5 +21,4 @@ public interface Jugador
     
     public String[] hacerJugada();
     
-    public String[] hacerJugada(int pos);
 }

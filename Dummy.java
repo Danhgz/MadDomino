@@ -60,13 +60,9 @@ public class Dummy implements Jugador
     
     public String[] hacerJugada()//Workaround mieo
     {
-        return new String[]{"a","a"};
+        return new String[]{"1","1"};
     }
     
-    public String[] hacerJugada(int pos)
-    {
-        return new String[]{"",""};
-    }
     
     private void ordenarBaraja()
     {
