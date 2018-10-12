@@ -26,15 +26,14 @@ public class Interfaz{
 
 
     //metodo para imprimir el menu de juego en consola.
-    public String[] imprimirMenuVersus(String[] actual)
+    public int[] imprimirMenuVersus()
     {           
-        String[] jugador = {"0","0"};
+        int[] jugador = {-1,-1};
         boolean err=false;
         int numJugador=0;
         String jugadorAux;
         do{
             System.out.print("~~~~~~~~~~~~~~~~~~~PARTIDA VERSUS~~~~~~~~~~~~~~~~~~~~~\n"+ 
-                            "(Digite S para salir)                                  \n"+
                             " Digite el "+(numJugador+1)+" jugador                  \n\n"+
                             " 1. Humano                                              \n"+
                             " 2. Allanbrito                                          \n"+
@@ -44,41 +43,39 @@ public class Interfaz{
             jugadorAux = input.next();
         
             if(jugadorAux.matches("^[1234]$")){
-                jugador[numJugador++]= jugadorAux;
+                jugador[numJugador++]= Integer.parseInt(jugadorAux)-1;//-1 para leer la posicion en prototipo
             }   
             else{
             err=true;
             }
-        }while(!(!jugador[1].equals("0")||jugadorAux.equalsIgnoreCase("s")));
-        
-        if(jugadorAux.equalsIgnoreCase("s")){
-            jugador = actual;
-        }
+        }while(jugador[1]==-1);        
         return jugador;
     }
     
-    public void imprimirTablero(Ficha[] tablero,int ocupado,JugadorVirtual j1,JugadorVirtual j2)
+    public void imprimirTablero(Ficha[] tablero,int ocupado,int j1,int j2)
     {   
         String ficha ;
-        String tableStr="  ";
+        String tableStr="";
         for(int i=0;i<ocupado;++i){
             ficha = "["+tablero[i].getIzq()+"|"+tablero[i].getDer()+"]";
             tableStr+= ficha;
         }
-        System.out.print("Jugador 1: "+j1.getPuntaje()+"     Juguador 2: "+j2.getPuntaje()+"+\n\n\tI"+tableStr+"D");
+        System.out.println("Jugador 1: "+j1+"     Juguador 2: "+j2+"\n\n\tI"+tableStr+"D\n");
     }
     
-    public String[] imprimirBaraja(Ficha[] mano,int ocupado) //Para Dummie solamente, pide la jugada tambien
-    {   
-        String ficha;
-        String[] resul;
-        resul = new String [2];
+    public String[] imprimirBaraja(Ficha[] mano) //Para Dummie solamente, pide la jugada ademas
+    {           
+        String[] resul = new String [2];
+        String numFicha="  ";
         String manoStr="  ";
         System.out.print("* - - - - - - - - - - - - - - - - - - - - - - *\n\n");
-        for(int i=0;i<ocupado;++i){
-            ficha = "["+mano[i].getIzq()+"|"+mano[i].getDer()+"]";
-            manoStr+= ficha;
+        for(int i=0;i<mano.length;++i){
+            if(mano[i]!=null){
+                numFicha+= "  "+i+"    ";
+                manoStr += "["+mano[i].getIzq()+"|"+mano[i].getDer()+"]  ";
+            }
         }
+        System.out.println(numFicha);
         System.out.println(manoStr);
         System.out.print("\n  -Digite la ficha que desea: ");
         resul[0] = ""+input.nextInt();
@@ -93,7 +90,7 @@ public class Interfaz{
                          "           "+jugador+" es el ganandor!                  \n");
     }
     
-    public void imprimirTorneo(JugadorVirtual[] jugador)
+    public void imprimirTorneo(Jugador[] jugador)
     {
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~RONDA 1~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n"+       
                            "                               ?????                                \n"+                           
@@ -106,7 +103,7 @@ public class Interfaz{
                            " "+jugador[0]+"  "+jugador[1]+"     "+jugador[2]+"  "+jugador[3]+"  \n");
         
     }    
-    public void imprimirTorneo(JugadorVirtual[] jugador, String ganador1,String ganador2)
+    public void imprimirTorneo(Jugador[] jugador, String ganador1,String ganador2)
     {
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~¡FINAL!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n"+       
                            "                               ?????                                \n"+                           
@@ -120,7 +117,7 @@ public class Interfaz{
         
     }
     
-    public void imprimirTorneo(JugadorVirtual[] jugador, String ganador1,String ganador2, String campeon)
+    public void imprimirTorneo(Jugador[] jugador, String ganador1,String ganador2, String campeon)
     {
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~FIN DEL TORNEO~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n"+       
                            "                            "+campeon+"                             \n"+                           

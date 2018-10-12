@@ -5,26 +5,21 @@
  * @version (a version number or a date)
  */
 public class Domino
-{
-    private Dummy dummy;
+{    
     private Interfaz interfaz;
     private Dealer dealer;
-    private JugadorVirtual jugador1;
-    private JugadorVirtual jugador2;
-    private String[] jugador;
-    private Ficha[] tablero; 
-    
+    private Jugador jugador1;
+    private Jugador jugador2;    
+    private Ficha[] tablero;
     private int ocupado; //Cantidad de espacios ocupados en el tablero
     
     public Domino() {
         interfaz = new Interfaz();
-        dealer = new Dealer();
-        jugador = new String[2];
+        dealer = new Dealer();        
         tablero = new Ficha[28];
         ocupado = 0;
     }
-
-    
+   
     public void ejecutar() {
         String op;
         boolean err = false;
@@ -52,19 +47,22 @@ public class Domino
         System.exit(0);
     }    
     
-
-    public void correr1v1(){
-        jugador =  interfaz.imprimirMenuVersus(jugador);
-        jugador1 = new JugadorVirtual(jugador[0]);
-        jugador2 = new JugadorVirtual(jugador[1]);
-        
-        repartirBarajas();
-        
-        tablero[0] = new Ficha(sacarPrimeraFicha());
-        ++ocupado;  
+    public void elegirJugadores()
+    {      
+        Jugador[] prototipo1 = new Jugador[]{new Dummy(),new Virtual1(),new  Virtual2(),new Virtual3()}; 
+        Jugador[] prototipo2 = new Jugador[]{new Dummy(),new Virtual1(),new  Virtual2(),new Virtual3()}; //Workaround mieo en caso de 2 instancias iguales
+        int[] jugador =  interfaz.imprimirMenuVersus();
+        jugador1 =   prototipo1[jugador[0]];
+        jugador2 =   prototipo2[jugador[1]];
+    }
+    
+    public void correr1v1(){       
+        boolean salir=false;
         do{
-            
-        }while(jugador1.getPuntaje()<100||jugador2.getPuntaje()<100);
+            elegirJugadores();
+            repartirBarajas();
+            salir=jugarPartida();
+        }while(!salir);
     }
     
     //Reparte las barajas hasta que alguno tenga un par e iniciar la partida
@@ -75,7 +73,49 @@ public class Domino
             dealer.repartirBarajaInicial(jugador2);    
             
             par = jugador1.tienePar() || jugador2.tienePar();       
-        }while(!par);        
+        }while(!par); 
+        
+    }
+    
+    public boolean jugarPartida()
+    {
+        boolean salir=false;
+        tablero[0] = new Ficha(sacarPrimeraFicha());
+        ++ocupado;  
+        do{
+            interfaz.imprimirTablero(tablero,ocupado,jugador1.getPuntaje(),jugador2.getPuntaje());
+            jugada(jugador1);
+            interfaz.imprimirTablero(tablero,ocupado,jugador1.getPuntaje(),jugador2.getPuntaje());
+            jugada(jugador2);
+        }while((jugador1.getPuntaje()<100 && jugador2.getPuntaje()<100)&&!salir);
+        
+        return salir;
+    }
+    
+      
+    private void jugada(Jugador jugador)
+    {       
+        String[] jugada;
+        if(jugador instanceof Dummy){
+            jugada = interfaz.imprimirBaraja(jugador.getMano());
+        }
+        else{
+            jugada= jugador.hacerJugada();
+        }  
+        ponerFicha(jugada,jugador);
+    }
+    
+    private void ponerFicha(String[] jugada,Jugador jugador)
+    {             
+        if(jugada[1].equalsIgnoreCase("I")){
+            ordenarTablero();
+            tablero[0] = jugador.getFicha(Integer.parseInt(jugada[0]));            
+        }
+        else{
+            tablero[ocupado] = jugador.getFicha(Integer.parseInt(jugada[0]));        
+        }
+        jugador.sacarFicha(Integer.parseInt(jugada[0]));
+        ++ocupado;          
     }
     
     private Ficha sacarPrimeraFicha(){
@@ -128,9 +168,10 @@ public class Domino
     }*/
     
     //Ordena el vector para que se pueda insertar una ficha a la izquierda (en la posicion 0)
-    private void ordenarTablero(Ficha ficha)
+    
+    private void ordenarTablero()
     {
-        for(int i=ocupado;i>=0;--i)
+        for(int i=ocupado-1;i>=0;--i)
         {
             tablero[i+1] = new Ficha(tablero[i]);
         }

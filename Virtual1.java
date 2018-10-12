@@ -4,16 +4,12 @@
  * @author (your name)
  * @version (a version number or a date)
  */
-public class JugadorVirtual
+public class Virtual1 implements Jugador
 {
     private Ficha[] baraja;
     private int puntaje;
     //CONSTRUCTOR
-    public JugadorVirtual(String jugador){
-        init();
-    }
-    
-    public void init(){
+    public Virtual1(){
         baraja = new Ficha[7]; 
         puntaje = 0;
         for(int i = 0; i < baraja.length ; ++i){
@@ -28,6 +24,20 @@ public class JugadorVirtual
     
     public int getPuntaje(){
         return this.puntaje;
+    }
+    
+    public Ficha[] getMano(){
+        return baraja;
+    }
+    
+    public String[] hacerJugada()//Workaround mieo
+    {
+        return new String[]{"a","a"};
+    }
+    
+    public String[] hacerJugada(int pos)
+    {
+        return new String[]{"",""};
     }
     
     //Verifica si tiene una ficha par
