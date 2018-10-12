@@ -1,4 +1,3 @@
-
 /**
  * Write a description of class Domino here.
  *
@@ -7,27 +6,49 @@
  */
 public class Domino
 {
-    // instance variables - replace the example below with your own
-    private int x;
+    private Dummy dummy;
+    private Interfaz interfaz;
+    private JugadorVirtual ia;
 
-    /**
-     * Constructor for objects of class Domino
-     */
     public Domino()
     {
-        // initialise instance variables
-        x = 0;
+        interfaz = new Interfaz();
     }
 
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
+    public void ejecutar()
     {
-        // put your code here
-        return x + y;
+        int op = 0;
+        do
+        {
+            // op=interfaz.elegirModoDeJuego();
+            switch(op)
+            {
+                case 1:
+                    correr1v1();
+                    break;
+                
+                case 2:
+                    correrTorneo();
+                    break;
+                
+                case 3:
+                    break;
+                
+                default:
+                    //mensaje de error
+            }
+        }while(op!=3);
+    }    
+    
+    public void correr1v1()
+    {
+        //  interfaz.elegirJugadores();
+        //  ia = new JugadorVirtual("Mr.Brito");
+        //  ia.pedirBaraja();
+    }
+    
+    public void correrTorneo()
+    {
+        //  laspatasdeMauro.repartir(); 
     }
 }
