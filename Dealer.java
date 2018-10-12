@@ -44,5 +44,30 @@ public class Dealer
         repetido[numFicha]= true;        
         return mazo[numFicha];
     }
+
+    
+    public void repartirBarajaInicial(Jugador jugador){
+        for(int i = 0; i< 7; ++i){
+            jugador.setFicha(repartir(),i);
+        }
+    }
+    
+    public int pedirInicio(int j1, int j2)
+    {
+        int caso;
+        if(j1==-1&&j2==-1){
+            caso = 0;
+        }
+        else
+        {
+            if(j1>j2){
+                caso = 1;
+            }
+            else{
+                caso = 2;
+            }
+        }
+        return caso;
+    }
 }
 

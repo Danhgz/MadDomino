@@ -5,50 +5,157 @@
  * @version (a version number or a date)
  */
 public class Domino
-{
-    private Dummy dummy;
+{    
     private Interfaz interfaz;
-    private JugadorVirtual ia;
-
-    public Domino()
-    {
+    private Dealer dealer;
+    private Jugador jugador1;
+    private Jugador jugador2;    
+    private Ficha[] tablero;
+    private int ocupado; //Cantidad de espacios ocupados en el tablero
+    
+    public Domino() {
         interfaz = new Interfaz();
+        dealer = new Dealer();        
+        tablero = new Ficha[28];
+        ocupado = 0;
     }
-
-    public void ejecutar()
-    {
-        int op = 0;
-        do
-        {
-            // op=interfaz.elegirModoDeJuego();
+   
+    public void ejecutar() {
+        String op;
+        boolean err = false;
+        do{
+            op = interfaz.imprimirMenuPrincipal(err);
+            err = false;
             switch(op)
             {
-                case 1:
-                    correr1v1();
-                    break;
-                
-                case 2:
-                    correrTorneo();
-                    break;
-                
-                case 3:
-                    break;
-                
+                case "1":
+                correr1v1();
+                break;
+
+                case "2":
+                correrTorneo();
+                break;                
+
+                case "3":   
+                System.out.println("~~~~~~~~~~~~ Gracias por jugar, hasta luego! :) ~~~~~~~~~~~");
+                break;                 
+
                 default:
-                    //mensaje de error
+                err = true;                        
             }
-        }while(op!=3);
+        }while(!op.equals("3"));
+        System.exit(0);
     }    
     
-    public void correr1v1()
-    {
-        //  interfaz.elegirJugadores();
-        //  ia = new JugadorVirtual("Mr.Brito");
-        //  ia.pedirBaraja();
+    public void elegirJugadores()
+    {      
+        Jugador[] prototipo1 = new Jugador[]{new Dummy(),new Virtual1(),new  Virtual2(),new Virtual3()}; 
+        Jugador[] prototipo2 = new Jugador[]{new Dummy(),new Virtual1(),new  Virtual2(),new Virtual3()}; //Workaround mieo en caso de 2 instancias iguales
+        int[] jugador =  interfaz.imprimirMenuVersus();
+        jugador1 =   prototipo1[jugador[0]];
+        jugador2 =   prototipo2[jugador[1]];
     }
     
-    public void correrTorneo()
+    public void correr1v1(){       
+        boolean salir=false;
+        do{
+            elegirJugadores();
+            repartirBarajas();
+            salir=jugarPartida();
+        }while(!salir);
+    }
+    
+    //Reparte las barajas hasta que alguno tenga un par e iniciar la partida
+    public void repartirBarajas(){       
+        boolean par = false;       
+        do{       
+            dealer.repartirBarajaInicial(jugador1);
+            dealer.repartirBarajaInicial(jugador2);    
+            
+            par = jugador1.tienePar() || jugador2.tienePar();       
+        }while(!par); 
+        
+    }
+    
+    public boolean jugarPartida()
     {
+        boolean salir=false;
+        tablero[0] = new Ficha(sacarPrimeraFicha());
+        ++ocupado;  
+        do{
+            interfaz.imprimirTablero(tablero,ocupado,jugador1.getPuntaje(),jugador2.getPuntaje());
+            jugada(jugador1);
+            interfaz.imprimirTablero(tablero,ocupado,jugador1.getPuntaje(),jugador2.getPuntaje());
+            jugada(jugador2);
+        }while((jugador1.getPuntaje()<100 && jugador2.getPuntaje()<100)&&!salir);
+        
+        return salir;
+    }
+    
+      
+    private void jugada(Jugador jugador)
+    {       
+        String[] jugada;
+        if(jugador instanceof Dummy){
+            jugada = interfaz.imprimirBaraja(jugador.getMano());
+        }
+        else{
+            jugada= jugador.hacerJugada();
+        }  
+        ponerFicha(jugada,jugador);
+    }
+    
+    private void ponerFicha(String[] jugada,Jugador jugador)
+    {             
+        if(jugada[1].equalsIgnoreCase("I")){
+            ordenarTablero();
+            tablero[0] = jugador.getFicha(Integer.parseInt(jugada[0]));            
+        }
+        else{
+            tablero[ocupado] = jugador.getFicha(Integer.parseInt(jugada[0]));        
+        }
+        jugador.sacarFicha(Integer.parseInt(jugada[0]));
+        ++ocupado;          
+    }
+    
+    private Ficha sacarPrimeraFicha(){
+        Ficha primerFicha = new Ficha(-1,-1); 
+        int pos=0;
+        int dueno=0;
+        for(int i=0;i<7;++i){                       
+            if(jugador1.getFicha(i).getEsPar()&& jugador1.getFicha(i).getIzq()>primerFicha.getIzq()){
+                primerFicha = new Ficha(jugador1.getFicha(i));
+                pos= i;
+                dueno=1;
+            }
+            if(jugador2.getFicha(i).getEsPar()&& jugador2.getFicha(i).getIzq()>primerFicha.getIzq()){
+                primerFicha = new Ficha(jugador2.getFicha(i)); 
+                pos= i;
+                dueno=2;
+            }
+            ++i;
+        }
+        
+        if(dueno==1){
+            jugador1.sacarFicha(pos);
+        }
+        else{
+            jugador2.sacarFicha(pos);
+        }
+        return primerFicha;
+    }
+    
+           
+    
+    private void ordenarTablero()
+    {
+        for(int i=ocupado-1;i>=0;--i)
+        {
+            tablero[i+1] = new Ficha(tablero[i]);
+        }
+    }
+    
+    public void correrTorneo()  {
         //  laspatasdeMauro.repartir(); 
     }
 }
