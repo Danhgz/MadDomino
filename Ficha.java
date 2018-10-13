@@ -11,7 +11,6 @@ public class Ficha
     private int izq;
     private int der;
     private boolean esPar;
-    private Icon [] ficha;
     
     public void setIzq(int izq){
         this.izq = izq;
@@ -48,6 +47,7 @@ public class Ficha
     public int getValor(){
         return this.izq + this.der;
     }
+    
     private void init(int izq, int der)
     {
         this.izq = izq;

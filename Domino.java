@@ -1,76 +1,25 @@
 /**
- * Write a description of class Dealer here.
+ * Write a description of class Domino here.
  *
  * @author (your name)
  * @version (a version number or a date)
  */
-import java.lang.Math;
-public class Dealer
-{
-    private Ficha [] mazo;
-    private int ultimaFicha;
-    
+public class Domino
+{    
     private Interfaz interfaz;
+    private Dealer dealer;
     private Jugador jugador1;
     private Jugador jugador2;    
     private Ficha[] tablero;
     private int ocupado; //Cantidad de espacios ocupados en el tablero
     
-    public Dealer(){
-        init();
-    }
-    
-    private void init(){
-        hacerMazo();
-        interfaz = new Interfaz();     
+    public Domino() {
+        interfaz = new Interfaz();
+        dealer = new Dealer();        
         tablero = new Ficha[28];
         ocupado = 0;
-    }    
-    private void hacerMazo(){
-        mazo = new Ficha[28]; 
-        ultimaFicha = mazo.length - 1;
-        int izq = 0;        
-        for(int i = 0; i < mazo.length;++i)
-        {         
-            for(int j = izq; j <= 6 ; ++j){
-                    mazo[i] = new Ficha();
-                    mazo[i].setIzq(izq);
-                    mazo[i].setDer(j);
-                    ++i;
-            }         
-            ++izq;
-        }
-        mezclar();
-    }
-
-    public Ficha repartir()
-    {           
-        return mazo[ultimaFicha--];
-    }
-
-    
-    private void mezclar(){
-        int x; 
-        int y;
-        for(int i = 0; i < mazo.length; ++i){
-            x  = (int) (Math.random() * mazo.length);
-            y = (int) (Math.random() * mazo.length);
-            swap(x,y);
-        }
-    }
-    
-    private void swap(int x, int y){
-        Ficha temp = mazo[x];
-        mazo[x] = mazo[y];
-        mazo[y] = temp;
     }
    
-    public void repartirBarajaInicial(Jugador jugador){
-        for(int i = 0; i< 7; ++i){
-            jugador.setFicha(repartir(),i);
-        }
-    }
-    
     public void ejecutar() {
         String op;
         boolean err = false;
@@ -97,15 +46,6 @@ public class Dealer
         }while(!op.equals("3"));
         System.exit(0);
     }    
-        
-    public void correr1v1(){       
-        boolean salir=false;
-        do{
-            elegirJugadores();
-            repartirBarajas();
-            salir=jugarPartida();
-        }while(!salir);
-    }
     
     public void elegirJugadores()
     {      
@@ -116,12 +56,21 @@ public class Dealer
         jugador2 =   prototipo2[jugador[1]];
     }
     
+    public void correr1v1(){       
+        boolean salir=false;
+        do{
+            elegirJugadores();
+            repartirBarajas();
+            salir=jugarPartida();
+        }while(!salir);
+    }
+    
     //Reparte las barajas hasta que alguno tenga un par e iniciar la partida
     public void repartirBarajas(){       
         boolean par = false;       
         do{       
-            repartirBarajaInicial(jugador1);
-            repartirBarajaInicial(jugador2);    
+            dealer.repartirBarajaInicial(jugador1);
+            dealer.repartirBarajaInicial(jugador2);    
             
             par = jugador1.tienePar() || jugador2.tienePar();       
         }while(!par); 
@@ -130,61 +79,28 @@ public class Dealer
     
     public boolean jugarPartida()
     {
-        boolean finPartida=false;
+        boolean salir=false;
         tablero[0] = new Ficha(sacarPrimeraFicha());
-        ++ocupado;
-        
-        boolean quienJuega = true;
+        ++ocupado;  
         do{
-                
-            do{
-                if(quienJuega){
-                    turno(jugador1);
-                    quienJuega = false;
-                }
-                else{
-                    turno(jugador2);
-                    quienJuega = true;
-                } 
-                if(hayGanador(jugador1,jugador2)){
-                    init();
-                }
-            }while(!hayGanador(jugador1,jugador2));
-        }while((jugador1.getPuntaje()<100 && jugador2.getPuntaje()<100)&&!finPartida);      
-        return  finPartida;
-    }
-    
-    public boolean hayGanador(Jugador jugador1,Jugador jugador2)
-    {
-        boolean ganador = false;
-        if(ganador = jugador1.getValor()==0){
-            jugador1.setPuntaje(jugador2.getValor());
-        }
-        else{
-            if(ganador =jugador2.getValor()==0){
-                jugador2.setPuntaje(jugador1.getValor());
-            }
-        }
+            interfaz.imprimirTablero(tablero,ocupado,jugador1.getPuntaje(),jugador2.getPuntaje());
+            jugada(jugador1);
+            interfaz.imprimirTablero(tablero,ocupado,jugador1.getPuntaje(),jugador2.getPuntaje());
+            jugada(jugador2);
+        }while((jugador1.getPuntaje()<100 && jugador2.getPuntaje()<100)&&!salir);
         
-        return ganador;
+        return salir;
     }
     
-    public void turno(Jugador jugador){
-        interfaz.imprimirTablero(tablero,ocupado,jugador.getPuntaje(),jugador2.getPuntaje());
-        jugada(jugador); 
-    }
-    
+      
     private void jugada(Jugador jugador)
     {       
         String[] jugada;
-        boolean err = false;
         if(jugador instanceof Dummy){
-            do
             jugada = interfaz.imprimirBaraja(jugador.getMano());
-            while(err);
         }
         else{
-            jugada = new String[]{"",""};//aqui va jugada alv
+            jugada= jugador.hacerJugada();
         }  
         ponerFicha(jugada,jugador);
     }
@@ -228,11 +144,13 @@ public class Dealer
         }
         return primerFicha;
     }
-        
-    //Ordena el vector para que se pueda insertar una ficha a la izquierda (en la posicion 0)    
+    
+           
+    
     private void ordenarTablero()
     {
-        for(int i=ocupado-1;i>=0;--i){
+        for(int i=ocupado-1;i>=0;--i)
+        {
             tablero[i+1] = new Ficha(tablero[i]);
         }
     }
@@ -240,28 +158,4 @@ public class Dealer
     public void correrTorneo()  {
         //  laspatasdeMauro.repartir(); 
     }
-    
-    public int pedirInicio(int j1, int j2)
-    {
-        int caso;
-        if(j1==-1&&j2==-1){
-            caso = 0;
-        }
-        else
-        {
-            if(j1>j2){
-                caso = 1;
-            }
-            else{
-                caso = 2;
-            }
-        }
-        return caso;
-    }
-
 }
-
-
-        
-
-

@@ -24,6 +24,8 @@ public interface Jugador
     public String[] hacerJugada(int izq, int der);
     
     public int getValor();
+    
+
 }
 
 
