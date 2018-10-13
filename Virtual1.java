@@ -13,14 +13,14 @@ public class Virtual1 implements Jugador
     public Virtual1(){
         baraja = new Ficha[21]; 
         puntaje = 0;
-        for(int i = 0; i < 7 ; ++i){
+        for(int i = 0; i < baraja.length ; ++i){
             baraja[i] = new Ficha();
         }
     }
     
-    public void setFicha(Ficha ficha, int i){
-        this.baraja[i].setIzq(ficha.getIzq());
-        this.baraja[i].setDer(ficha.getDer());
+    public void setFicha(Ficha ficha){
+        this.baraja[ocupado].setIzq(ficha.getIzq());
+        this.baraja[ocupado].setDer(ficha.getDer());
         ++ocupado;
     }
     
@@ -75,6 +75,15 @@ public class Virtual1 implements Jugador
     public String[] hacerJugada(int izq, int der)
     {
         return extremosIguales(izq , der);
+    }
+    
+    public boolean tieneJugada(int izq, int der)
+    {
+        boolean tiene=false;
+        for(int i = 0; i < ocupado; ++i){            
+            tiene = baraja[i].getIzq() == izq || baraja[i].getIzq() == der||baraja[i].getDer() == izq||baraja[i].getDer() == der; 
+        }
+        return tiene;
     }
     
     //Verifica si tiene una ficha par

@@ -13,15 +13,16 @@ public class Virtual2 implements Jugador
     //CONSTRUCTOR
     public Virtual2(){
         baraja = new Ficha[21]; 
+        ocupado=0;
         puntaje = 0;
         for(int i = 0; i < baraja.length ; ++i){
             baraja[i] = new Ficha();
         }  
     }
     
-    public void setFicha(Ficha ficha, int i){
-        this.baraja[i].setIzq(ficha.getIzq());
-        this.baraja[i].setDer(ficha.getDer());
+    public void setFicha(Ficha ficha){
+        this.baraja[ocupado].setIzq(ficha.getIzq());
+        this.baraja[ocupado].setDer(ficha.getDer());
         ++ocupado;
     }
     
@@ -45,6 +46,15 @@ public class Virtual2 implements Jugador
             
         }
         return jugada;
+    }
+    
+    public boolean tieneJugada(int izq, int der)
+    {
+        boolean tiene=false;
+        for(int i = 0; i < ocupado; ++i){            
+            tiene = baraja[i].getIzq() == izq || baraja[i].getIzq() == der||baraja[i].getDer() == izq||baraja[i].getDer() == der; 
+        }
+        return tiene;
     }
     
     //Verifica si tiene una ficha par

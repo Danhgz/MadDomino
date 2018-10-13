@@ -25,6 +25,12 @@ public class Dummy implements Jugador
         this.baraja[i].setDer(ficha.getDer());
     } 
     
+    public void setFicha(Ficha ficha){
+        this.baraja[ocupado].setIzq(ficha.getIzq());
+        this.baraja[ocupado].setDer(ficha.getDer());
+        ++ocupado;
+    }
+    
     public int getPuntaje(){
         return this.puntaje;
     }
@@ -70,12 +76,20 @@ public class Dummy implements Jugador
         }
         
         return existe;
-    }
-    
+    }   
     
     public String[] hacerJugada(int izq, int der)
     {
         return new String[]{"",""};
+    }
+    
+    public boolean tieneJugada(int izq, int der)
+    {
+        boolean tiene=false;
+        for(int i = 0; i < ocupado; ++i){            
+            tiene = baraja[i].getIzq() == izq || baraja[i].getIzq() == der||baraja[i].getDer() == izq||baraja[i].getDer() == der; 
+        }
+        return tiene;
     }
     
      public int getValor(){

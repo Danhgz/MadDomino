@@ -63,7 +63,7 @@ public class Interfaz{
         System.out.println("Jugador 1: "+j1+"     Juguador 2: "+j2+"\n\n\tI"+tableStr+"D\n");
     }
     
-    public String[] imprimirBaraja(Ficha[] mano) //Para Dummie solamente, pide la jugada ademas
+    public String[] imprimirBaraja(Ficha[] mano, boolean err) //Para Dummie solamente, pide la jugada ademas
     {           
         String[] resul = new String [2];
         String numFicha="  ";
@@ -77,6 +77,9 @@ public class Interfaz{
         }
         System.out.println(numFicha);
         System.out.println(manoStr);
+        if(err){
+            System.out.print("\n  Error! Inserte una jugada valida!");
+        }
         System.out.print("\n  -Digite la ficha que desea: ");
         resul[0] = ""+input.nextInt();
         System.out.print("\n  -Donde desea colocar la ficha?(I=izq D=der): ");
