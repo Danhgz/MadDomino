@@ -45,6 +45,9 @@ public class Ficha
     public Ficha(){
     }
     
+    public int getValor(){
+        return this.izq + this.der;
+    }
     private void init(int izq, int der)
     {
         this.izq = izq;
@@ -58,4 +61,9 @@ public class Ficha
         izq = temp;
     }
     
+    public String toString(){
+        return "["+izq+"|"+der+"]";
+    }
+    
 }
+

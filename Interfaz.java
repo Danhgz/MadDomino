@@ -67,12 +67,12 @@ public class Interfaz{
     {           
         String[] resul = new String [2];
         String numFicha="  ";
-        String manoStr="  ";
+        String manoStr="";
         System.out.print("* - - - - - - - - - - - - - - - - - - - - - - *\n\n");
         for(int i=0;i<mano.length;++i){
             if(mano[i]!=null){
                 numFicha+= "  "+i+"    ";
-                manoStr += "["+mano[i].getIzq()+"|"+mano[i].getDer()+"]  ";
+                manoStr += "  "+mano[i];
             }
         }
         System.out.println(numFicha);

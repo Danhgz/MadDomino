@@ -30,12 +30,11 @@ public class Virtual3 implements Jugador
         return baraja;
     }
     
-    
-    public String[] hacerJugada()//Workaround mieo
-    {
-        return new String[]{"a","a"};
-    }
 
+    public String[] hacerJugada(int zq, int der)
+    {
+        return new String[]{"",""};
+    }
     
     //Verifica si tiene una ficha par
     public boolean tienePar(){
@@ -51,6 +50,14 @@ public class Virtual3 implements Jugador
     
     public void sacarFicha(int i){
         baraja[i] = null;
+    }
+    
+     public int getValor(){
+        int suma = 0;
+        for(Ficha ficha : baraja){
+            suma = ficha.getValor();
+        }
+        return suma;
     }
     
     public Ficha getFicha(int i){

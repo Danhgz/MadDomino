@@ -58,11 +58,11 @@ public class Dummy implements Jugador
     }
     
     
-    public String[] hacerJugada()//Workaround mieo
+    public String[] hacerJugada(int izq, int der)
     {
-        return new String[]{"1","1"};
+        return new String[]{"",""};
     }
-    
+
     
     private void ordenarBaraja()
     {
@@ -74,5 +74,12 @@ public class Dummy implements Jugador
         }
     }
     
+     public int getValor(){
+        int suma = 0;
+        for(Ficha ficha : baraja){
+            suma = ficha.getValor();
+        }
+        return suma;
+    }
     
 }
