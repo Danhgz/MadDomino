@@ -8,11 +8,12 @@ public class Virtual1 implements Jugador
 {
     private Ficha[] baraja;
     private int puntaje;
+    private int ocupado;
     //CONSTRUCTOR
     public Virtual1(){
-        baraja = new Ficha[7]; 
+        baraja = new Ficha[21]; 
         puntaje = 0;
-        for(int i = 0; i < baraja.length ; ++i){
+        for(int i = 0; i < 7 ; ++i){
             baraja[i] = new Ficha();
         }
     }
@@ -20,6 +21,7 @@ public class Virtual1 implements Jugador
     public void setFicha(Ficha ficha, int i){
         this.baraja[i].setIzq(ficha.getIzq());
         this.baraja[i].setDer(ficha.getDer());
+        ++ocupado;
     }
     
     public int getPuntaje(){
@@ -32,18 +34,18 @@ public class Virtual1 implements Jugador
     
     private String[] extremosIguales(int izq, int der){
         String []resultado = new String[2];
-        for(int i = 0; i < baraja.length; ++i){
-            if(baraja[i].getEsPar() && baraja[i].getIzq() == izq){
+        for(int i = 0; i < ocupado; ++i){
+            if(baraja[i].getEsPar() && baraja[i].getIzq() == der){
                 resultado[0] = "" + i;
                 resultado[1] = "I";
             }
-            else if(baraja[i].getEsPar() && baraja[i].getDer() == der ){
+            else if(baraja[i].getEsPar() && baraja[i].getDer() == izq ){
                 resultado[0] = "" + i;
                 resultado [1] = "D";
             }   
         }
         
-        for(int i = 0; i < baraja.length; ++i){
+        for(int i = 0; i < ocupado; ++i){
            if(baraja[i].getIzq() == der && der > izq){
                resultado[0] = "" + i;
                resultado[1] = "D";
