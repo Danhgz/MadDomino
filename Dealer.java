@@ -17,12 +17,15 @@ public class Dealer
     private int ocupado; //Cantidad de espacios ocupados en el tablero
     
     public Dealer(){
+        init();
+    }
+    
+    private void init(){
         hacerMazo();
         interfaz = new Interfaz();     
         tablero = new Ficha[28];
         ocupado = 0;
-    }
-    
+    }    
     private void hacerMazo(){
         mazo = new Ficha[28]; 
         ultimaFicha = mazo.length - 1;
@@ -94,6 +97,15 @@ public class Dealer
         }while(!op.equals("3"));
         System.exit(0);
     }    
+        
+    public void correr1v1(){       
+        boolean salir=false;
+        do{
+            elegirJugadores();
+            repartirBarajas();
+            salir=jugarPartida();
+        }while(!salir);
+    }
     
     public void elegirJugadores()
     {      
@@ -102,15 +114,6 @@ public class Dealer
         int[] jugador =  interfaz.imprimirMenuVersus();
         jugador1 =   prototipo1[jugador[0]];
         jugador2 =   prototipo2[jugador[1]];
-    }
-    
-    public void correr1v1(){       
-        boolean salir=false;
-        do{
-            elegirJugadores();
-            repartirBarajas();
-            salir=jugarPartida();
-        }while(!salir);
     }
     
     //Reparte las barajas hasta que alguno tenga un par e iniciar la partida
@@ -129,18 +132,48 @@ public class Dealer
     {
         boolean finPartida=false;
         tablero[0] = new Ficha(sacarPrimeraFicha());
-        ++ocupado;  
-        do{
-            interfaz.imprimirTablero(tablero,ocupado,jugador1.getPuntaje(),jugador2.getPuntaje());
-            jugada(jugador1);
-            interfaz.imprimirTablero(tablero,ocupado,jugador1.getPuntaje(),jugador2.getPuntaje());
-            jugada(jugador2);
-        }while((jugador1.getPuntaje()<100 && jugador2.getPuntaje()<100)&&!finPartida);
+        ++ocupado;
         
+        boolean quienJuega = true;
+        do{
+                
+            do{
+                if(quienJuega){
+                    turno(jugador1);
+                    quienJuega = false;
+                }
+                else{
+                    turno(jugador2);
+                    quienJuega = true;
+                } 
+                if(hayGanador(jugador1,jugador2)){
+                    init();
+                }
+            }while(!hayGanador(jugador1,jugador2));
+        }while((jugador1.getPuntaje()<100 && jugador2.getPuntaje()<100)&&!finPartida);      
         return  finPartida;
     }
     
-      
+    public boolean hayGanador(Jugador jugador1,Jugador jugador2)
+    {
+        boolean ganador = false;
+        if(ganador = jugador1.getValor()==0){
+            jugador1.setPuntaje(jugador2.getValor());
+        }
+        else{
+            if(ganador =jugador2.getValor()==0){
+                jugador2.setPuntaje(jugador1.getValor());
+            }
+        }
+        
+        return ganador;
+    }
+    
+    public void turno(Jugador jugador){
+        interfaz.imprimirTablero(tablero,ocupado,jugador.getPuntaje(),jugador2.getPuntaje());
+        jugada(jugador); 
+    }
+    
     private void jugada(Jugador jugador)
     {       
         String[] jugada;

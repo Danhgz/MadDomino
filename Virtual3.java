@@ -26,6 +26,10 @@ public class Virtual3 implements Jugador
         return this.puntaje;
     }
     
+    public void setPuntaje(int puntaje){
+        this.puntaje = puntaje;
+    }
+    
     public Ficha[] getMano(){
         return baraja;
     }

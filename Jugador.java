@@ -11,6 +11,8 @@ public interface Jugador
     
     public int getPuntaje();
     
+    public void setPuntaje(int puntaje);
+    
     public boolean tienePar();
     
     public void sacarFicha(int i);
