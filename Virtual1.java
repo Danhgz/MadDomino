@@ -49,7 +49,16 @@ public class Virtual1 implements Jugador
             }   
         }
         
-        
+        for(int i = 0; i < baraja.length; ++i){
+           if(baraja[i].getDer() == der && der > izq){
+               resultado[0] = "" + i;
+               resultado[1] = "D";
+           }
+           else  if(baraja[i].getIzq() == izq && izq > der){
+               resultado[0] = "" + i;
+               resultado[1] = "I";
+           }
+        }
         return new String[]{"",""};
     }
     
