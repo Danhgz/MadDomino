@@ -30,11 +30,6 @@ public class Virtual1 implements Jugador
         return baraja;
     }
     
-    public String[] hacerJugada()//Workaround mieo
-    {
-        return new String[]{"a","a"};
-    }
-    
     private String[] extremosIguales(int izq, int der){
         String []resultado = new String[2];
         for(int i = 0; i < baraja.length; ++i){
@@ -71,9 +66,9 @@ public class Virtual1 implements Jugador
         return resultado;
     }
     
-    public void hacerJugada(int izq, int der)
+    public String[] hacerJugada(int izq, int der)
     {
-        extremosIguales(izq , der);
+        return extremosIguales(izq , der);
     }
     
     //Verifica si tiene una ficha par
