@@ -8,6 +8,7 @@ public class Virtual3 implements Jugador
 {
     private Ficha[] baraja;
     private int puntaje;
+    private int ocupado;
     //CONSTRUCTOR
     public Virtual3(){
         baraja = new Ficha[7]; 
@@ -17,13 +18,18 @@ public class Virtual3 implements Jugador
         }
     }
     
-    public void setFicha(Ficha ficha, int i){
-        this.baraja[i].setIzq(ficha.getIzq());
-        this.baraja[i].setDer(ficha.getDer());
+   public void setFicha(Ficha ficha){
+        this.baraja[ocupado].setIzq(ficha.getIzq());
+        this.baraja[ocupado].setDer(ficha.getDer());
+        ++ocupado;
     }
     
     public int getPuntaje(){
         return this.puntaje;
+    }
+    
+    public void setPuntaje(int puntaje){
+        this.puntaje = puntaje;
     }
     
     public Ficha[] getMano(){
@@ -34,6 +40,15 @@ public class Virtual3 implements Jugador
     public String[] hacerJugada(int zq, int der)
     {
         return new String[]{"",""};
+    }
+    
+    public boolean tieneJugada(int izq, int der)
+    {
+        boolean tiene=false;
+        for(int i = 0; i < ocupado; ++i){            
+            tiene = baraja[i].getIzq() == izq || baraja[i].getIzq() == der||baraja[i].getDer() == izq||baraja[i].getDer() == der; 
+        }
+        return tiene;
     }
     
     //Verifica si tiene una ficha par

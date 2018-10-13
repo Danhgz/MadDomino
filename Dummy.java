@@ -23,14 +23,20 @@ public class Dummy implements Jugador
     public void setFicha(Ficha ficha, int i){
         this.baraja[i].setIzq(ficha.getIzq());
         this.baraja[i].setDer(ficha.getDer());
-    }
+    } 
     
-    public void sacarFicha(int i){
-        baraja[i] = null;
+    public void setFicha(Ficha ficha){
+        this.baraja[ocupado].setIzq(ficha.getIzq());
+        this.baraja[ocupado].setDer(ficha.getDer());
+        ++ocupado;
     }
     
     public int getPuntaje(){
         return this.puntaje;
+    }
+    
+    public void setPuntaje(int puntaje){
+        this.puntaje = puntaje;
     }
     
     public int getOcupado(){
@@ -45,6 +51,21 @@ public class Dummy implements Jugador
         return baraja;
     }
     
+    public void sacarFicha(int i){
+        baraja[i] = null;
+        for(int j=i;j<ocupado;++j)
+        {
+            swap(j,j+1);
+        }
+        --ocupado;
+    }
+    
+    private void swap(int x, int y){
+        Ficha temp = baraja[x];
+        baraja[x] = baraja[y];
+        baraja[y] = temp;
+    } 
+    
     //Verifica si tiene una ficha par
     public boolean tienePar(){
         boolean existe = false;
@@ -55,23 +76,20 @@ public class Dummy implements Jugador
         }
         
         return existe;
-    }
-    
+    }   
     
     public String[] hacerJugada(int izq, int der)
     {
         return new String[]{"",""};
     }
-
     
-    private void ordenarBaraja()
+    public boolean tieneJugada(int izq, int der)
     {
-        for(int i=0;i<ocupado-1;++i)
-        {
-            if(baraja[i]==null)
-                baraja[i] = new Ficha(baraja[baraja.length-1]);
-                baraja[i+1]= null;
+        boolean tiene=false;
+        for(int i = 0; i < ocupado; ++i){            
+            tiene = baraja[i].getIzq() == izq || baraja[i].getIzq() == der||baraja[i].getDer() == izq||baraja[i].getDer() == der; 
         }
+        return tiene;
     }
     
      public int getValor(){

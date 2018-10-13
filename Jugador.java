@@ -7,9 +7,11 @@
 public interface Jugador
 {
     
-    void setFicha(Ficha ficha, int i);
+    void setFicha(Ficha ficha);
     
     public int getPuntaje();
+    
+    public void setPuntaje(int puntaje);
     
     public boolean tienePar();
     
@@ -20,6 +22,8 @@ public interface Jugador
     public Ficha[] getMano();
     
     public String[] hacerJugada(int izq, int der);
+    
+    public boolean tieneJugada(int izq, int der);
     
     public int getValor();
     
