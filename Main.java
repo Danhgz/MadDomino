@@ -11,7 +11,7 @@ public class Main
 {  
     public static void main(String[] args)
     {
-        Domino domino = new Domino();
-        domino.ejecutar();
+        Dealer dealer= new Dealer();
+        dealer.ejecutar();
     }
 }

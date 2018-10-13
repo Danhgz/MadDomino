@@ -45,10 +45,25 @@ public class Ficha
     public Ficha(){
     }
     
+    public int getValor(){
+        return this.izq + this.der;
+    }
     private void init(int izq, int der)
     {
         this.izq = izq;
         this.der = der;
         esPar= this.izq == this.der;
     }
+    
+    public void swap(){
+        int temp = this.izq;
+        der = izq;
+        izq = temp;
+    }
+    
+    public String toString(){
+        return "["+izq+"|"+der+"]";
+    }
+    
 }
+

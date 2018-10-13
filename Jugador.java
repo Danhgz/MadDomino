@@ -19,7 +19,11 @@ public interface Jugador
     
     public Ficha[] getMano();
     
+    public void hacerJugada(int der, int izq);
+    
     public int getValor();
     
-    public String[] hacerJugada(int izq, int der);
+
 }
+
+

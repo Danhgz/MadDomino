@@ -36,7 +36,8 @@ public class Virtual2 implements Jugador
         return new String[]{"a","a"};
     }
     
-    public String[] hacerJugada(int pos)
+
+    public String[] hacerJugada(int izq, int der)
     {
         return new String[]{"",""};
     }
@@ -60,5 +61,14 @@ public class Virtual2 implements Jugador
     public Ficha getFicha(int i){
         return baraja[i];
     }
- 
+    
+    
+    public int getValor(){
+        int suma = 0;
+        for(Ficha ficha : baraja){
+            suma = ficha.getValor();
+        }
+        return suma;
+    }
+    
 }

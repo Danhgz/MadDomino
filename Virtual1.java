@@ -35,8 +35,7 @@ public class Virtual1 implements Jugador
         return new String[]{"a","a"};
     }
     
-    public String[] hacerJugada(int izq, int der)
-    {
+    private String[] extremosIguales(int izq, int der){
         String []resultado = new String[2];
         for(int i = 0; i < baraja.length; ++i){
             if(baraja[i].getEsPar() && baraja[i].getIzq() == izq){
@@ -50,16 +49,31 @@ public class Virtual1 implements Jugador
         }
         
         for(int i = 0; i < baraja.length; ++i){
-           if(baraja[i].getDer() == der && der > izq){
+           if(baraja[i].getIzq() == der && der > izq){
                resultado[0] = "" + i;
                resultado[1] = "D";
            }
-           else  if(baraja[i].getIzq() == izq && izq > der){
+           else  if(baraja[i].getDer() == izq && izq > der){
+               resultado[0] = "" + i;
+               resultado[1] = "I";
+           }
+           else if(baraja[i].getDer() == der && der > izq){
+               baraja[i].swap();
+               resultado[0] = "" + i;
+               resultado[1] = "D";
+           }
+           else if(baraja[i].getIzq() == izq && izq > der){
+               baraja[i].swap();
                resultado[0] = "" + i;
                resultado[1] = "I";
            }
         }
-        return new String[]{"",""};
+        return resultado;
+    }
+    
+    public void hacerJugada(int izq, int der)
+    {
+        extremosIguales(izq , der);
     }
     
     //Verifica si tiene una ficha par
@@ -80,6 +94,14 @@ public class Virtual1 implements Jugador
     
     public Ficha getFicha(int i){
         return baraja[i];
+    }
+    
+     public int getValor(){
+        int suma = 0;
+        for(Ficha ficha : baraja){
+            suma = ficha.getValor();
+        }
+        return suma;
     }
     
     /*public void comer()
@@ -104,3 +126,4 @@ public class Virtual1 implements Jugador
     }*/
     
 }
+
