@@ -7,6 +7,7 @@
 public class Virtual1 implements Jugador
 {
     private Ficha[] baraja;
+    private String nombre;
     private int puntaje;
     private int ocupado;
     //CONSTRUCTOR
@@ -26,6 +27,10 @@ public class Virtual1 implements Jugador
     
     public int getPuntaje(){
         return this.puntaje;
+    }
+    
+    public String getNombre(){
+        return this.nombre;
     }
     
     public void setPuntaje(int puntaje){
@@ -81,7 +86,9 @@ public class Virtual1 implements Jugador
     {
         boolean tiene=false;
         for(int i = 0; i < ocupado; ++i){            
-            tiene = baraja[i].getIzq() == izq || baraja[i].getIzq() == der||baraja[i].getDer() == izq||baraja[i].getDer() == der; 
+            if(baraja[i].getIzq() == izq || baraja[i].getIzq() == der||baraja[i].getDer() == izq||baraja[i].getDer() == der){
+                tiene = true; 
+            }
         }
         return tiene;
     }
@@ -100,40 +107,42 @@ public class Virtual1 implements Jugador
     
     public void sacarFicha(int i){
         baraja[i] = null;
+        for(int j=i;j<ocupado-1;++j)
+        {
+            swap(j,j+1);
+        }
+        --ocupado;
+    }
+    
+    private void swap(int x, int y){
+        Ficha temp = baraja[x];
+        baraja[x] = baraja[y];
+        baraja[y] = temp;
     }
     
     public Ficha getFicha(int i){
         return baraja[i];
     }
     
-     public int getValor(){
+    public boolean tieneFichas(){
+        boolean tiene = false;
+        for(Ficha ficha : baraja){
+            if(ficha!=null){
+                tiene=true;
+            }
+        }
+        return tiene;
+    }
+        
+    public int getValor(){
         int suma = 0;
         for(Ficha ficha : baraja){
-            suma = ficha.getValor();
+            if(ficha!=null){
+                suma += ficha.getValor();
+            }
         }
         return suma;
     }
-    
-    /*public void comer()
-    {
-        Ficha[] barajaAux = new Ficha[baraja.length+1];
-        for(int i=0; i<barajaAux.length; ++i)
-        {         
-            barajaAux[i]= new Ficha();
-            if(i<barajaAux.length-1){                
-                barajaAux[i]= baraja[i];
-            }
-            else{                
-                barajaAux[i] = dealer.repartir();
-            }
-        }
-        baraja = new Ficha[barajaAux.length];
-        for(int i=0; i<baraja.length; ++i)
-        {
-            baraja[i]= new Ficha();
-            baraja[i]= barajaAux[i];
-        }
-    }*/
     
 }
 

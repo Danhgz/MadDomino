@@ -8,6 +8,7 @@
 public class Virtual2 implements Jugador
 {
     private Ficha[] baraja;
+    private String nombre;
     private int puntaje;
     private int ocupado;
     //CONSTRUCTOR
@@ -28,6 +29,10 @@ public class Virtual2 implements Jugador
     
     public int getPuntaje(){
         return this.puntaje;
+    }
+    
+    public String getNombre(){
+        return this.nombre;
     }
     
     public void setPuntaje(int puntaje){
@@ -52,7 +57,9 @@ public class Virtual2 implements Jugador
     {
         boolean tiene=false;
         for(int i = 0; i < ocupado; ++i){            
-            tiene = baraja[i].getIzq() == izq || baraja[i].getIzq() == der||baraja[i].getDer() == izq||baraja[i].getDer() == der; 
+            if(baraja[i].getIzq() == izq || baraja[i].getIzq() == der||baraja[i].getDer() == izq||baraja[i].getDer() == der){
+                tiene = true; 
+            }
         }
         return tiene;
     }
@@ -71,7 +78,7 @@ public class Virtual2 implements Jugador
     
     public void sacarFicha(int i){
         baraja[i] = null;
-        for(int j=i;j<ocupado;++j)
+        for(int j=i;j<ocupado-1;++j)
         {
             swap(j,j+1);
         }
@@ -87,12 +94,22 @@ public class Virtual2 implements Jugador
     public Ficha getFicha(int i){
         return baraja[i];
     }
+    
+    public boolean tieneFichas(){
+        boolean tiene = false;
+        for(Ficha ficha : baraja){
+            if(ficha!=null){
+                tiene=true;
+            }
+        }
+        return tiene;
+    }
         
     public int getValor(){
         int suma = 0;
         for(Ficha ficha : baraja){
             if(ficha!=null){
-                suma += ficha.getValor()+1;
+                suma += ficha.getValor();
             }
         }
         return suma;

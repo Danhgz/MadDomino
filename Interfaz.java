@@ -33,7 +33,7 @@ public class Interfaz{
         int numJugador=0;
         String jugadorAux;
         do{
-            System.out.print("~~~~~~~~~~~~~~~~~~~PARTIDA VERSUS~~~~~~~~~~~~~~~~~~~~~\n"+ 
+            System.out.print("~~~~~~~~~~~~~~~~~~~~~~PARTIDA VERSUS~~~~~~~~~~~~~~~~~~~~~~~~~\n"+ 
                             " Digite el "+(numJugador+1)+" jugador                  \n\n"+
                             " 1. Humano                                              \n"+
                             " 2. Allanbrito                                          \n"+
@@ -60,30 +60,36 @@ public class Interfaz{
             ficha = "["+tablero[i].getIzq()+"|"+tablero[i].getDer()+"]";
             tableStr+= ficha;
         }
-        System.out.println("Jugador 1: "+j1+"     Juguador 2: "+j2+"\n\n\tI"+tableStr+"D\n");
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~DOMINO~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("         Jugador 1: "+j1+"          Juguador 2: "+j2+"\n\n\tI"+tableStr+"D\n");
     }
     
-    public String[] imprimirBaraja(Ficha[] mano, boolean err) //Para Dummie solamente, pide la jugada ademas
+    public String[] imprimirBaraja(Jugador jugador, boolean err) //Para Dummie solamente, pide la jugada ademas
     {           
-        String[] resul = new String [2];
+        String[] resul = {"-1","-1"};
         String numFicha="  ";
         String manoStr="";
-        System.out.print("* - - - - - - - - - - - - - - - - - - - - - - *\n\n");
-        for(int i=0;i<mano.length;++i){
-            if(mano[i]!=null){
+        System.out.print("* - - - - - - - - - - - "+jugador.getNombre()+" - - - - - - - - - - - - *\n");
+        for(int i=0;i<jugador.getMano().length;++i){
+            if(jugador.getFicha(i)!=null){
                 numFicha+= "  "+i+"    ";
-                manoStr += "  "+mano[i];
+                manoStr += "  "+jugador.getFicha(i);
             }
         }
         System.out.println(numFicha);
         System.out.println(manoStr);
+        System.out.print("\n (Digite S para Salir)");
         if(err){
             System.out.print("\n  Error! Inserte una jugada valida!");
         }
-        System.out.print("\n  -Digite la ficha que desea: ");
-        resul[0] = ""+input.nextInt();
-        System.out.print("\n  -Donde desea colocar la ficha?(I=izq D=der): ");
-        resul[1] = ""+input.next().charAt(0);
+        System.out.print("\n  -Digite el numero de ficha que desea: ");
+        do{
+            resul[0] = ""+input.next();
+        }while(!(resul[0].matches("^[0-9]{1,2}$")||resul[0].matches("^[Ss]$")));
+        if(!resul[0].equalsIgnoreCase("s")){
+            System.out.print("\n  -Donde desea colocar la ficha?(I=izq D=der): ");
+            resul[1] = ""+input.next().charAt(0);
+        }
         return resul;
     }
     

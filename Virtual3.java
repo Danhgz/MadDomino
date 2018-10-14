@@ -7,6 +7,7 @@
 public class Virtual3 implements Jugador
 {
     private Ficha[] baraja;
+    private String nombre;
     private int puntaje;
     private int ocupado;
     //CONSTRUCTOR
@@ -18,7 +19,7 @@ public class Virtual3 implements Jugador
         }
     }
     
-   public void setFicha(Ficha ficha){
+    public void setFicha(Ficha ficha){
         this.baraja[ocupado].setIzq(ficha.getIzq());
         this.baraja[ocupado].setDer(ficha.getDer());
         ++ocupado;
@@ -26,6 +27,10 @@ public class Virtual3 implements Jugador
     
     public int getPuntaje(){
         return this.puntaje;
+    }
+    
+    public String getNombre(){
+        return this.nombre;
     }
     
     public void setPuntaje(int puntaje){
@@ -46,7 +51,9 @@ public class Virtual3 implements Jugador
     {
         boolean tiene=false;
         for(int i = 0; i < ocupado; ++i){            
-            tiene = baraja[i].getIzq() == izq || baraja[i].getIzq() == der||baraja[i].getDer() == izq||baraja[i].getDer() == der; 
+            if(baraja[i].getIzq() == izq || baraja[i].getIzq() == der||baraja[i].getDer() == izq||baraja[i].getDer() == der){
+                tiene = true; 
+            }
         }
         return tiene;
     }
@@ -65,12 +72,35 @@ public class Virtual3 implements Jugador
     
     public void sacarFicha(int i){
         baraja[i] = null;
+        for(int j=i;j<ocupado-1;++j)
+        {
+            swap(j,j+1);
+        }
+        --ocupado;
     }
     
-     public int getValor(){
+    private void swap(int x, int y){
+        Ficha temp = baraja[x];
+        baraja[x] = baraja[y];
+        baraja[y] = temp;
+    }
+    
+    public boolean tieneFichas(){
+        boolean tiene = false;
+        for(Ficha ficha : baraja){
+            if(ficha!=null){
+                tiene=true;
+            }
+        }
+        return tiene;
+    }
+        
+    public int getValor(){
         int suma = 0;
         for(Ficha ficha : baraja){
-            suma = ficha.getValor();
+            if(ficha!=null){
+                suma += ficha.getValor();
+            }
         }
         return suma;
     }

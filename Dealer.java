@@ -30,14 +30,14 @@ public class Dealer
         mazo = new Ficha[28]; 
         ultimaFicha = mazo.length - 1;
         int izq = 0;        
-        for(int i = 0; i < mazo.length;++i)
+        for(int i = 0; i < mazo.length;)
         {         
             for(int j = izq; j <= 6 ; ++j){
                     mazo[i] = new Ficha();
                     mazo[i].setIzq(izq);
                     mazo[i].setDer(j);
                     ++i;
-            }         
+            }
             ++izq;
         }
         mezclar();
@@ -98,19 +98,16 @@ public class Dealer
         System.exit(0);
     }    
         
-    public void correr1v1(){       
-        boolean salir=false;
-        do{
-            elegirJugadores();
-            repartirBarajas();
-            salir=jugarPartida();
-        }while(!salir);
+    public void correr1v1(){  
+        elegirJugadores();
+        repartirBarajas();
+        jugarPartida();
     }
     
     public void elegirJugadores()
     {      
-        Jugador[] prototipo1 = new Jugador[]{new Dummy(),new Virtual1(),new  Virtual2(),new Virtual3()}; 
-        Jugador[] prototipo2 = new Jugador[]{new Dummy(),new Virtual1(),new  Virtual2(),new Virtual3()}; //Workaround mieo en caso de 2 instancias iguales
+        Jugador[] prototipo1 = new Jugador[]{new Dummy("Jugador 1"),new Virtual1(),new  Virtual2(),new Virtual3()}; 
+        Jugador[] prototipo2 = new Jugador[]{new Dummy("Jugador 2"),new Virtual1(),new  Virtual2(),new Virtual3()}; //Workaround mieo en caso de 2 instancias iguales
         int[] jugador =  interfaz.imprimirMenuVersus();
         jugador1 =   prototipo1[jugador[0]];
         jugador2 =   prototipo2[jugador[1]];
@@ -155,85 +152,108 @@ public class Dealer
         return primerFicha;
     }
     
-    public boolean jugarPartida()
+    public void jugarPartida()
     {
-        boolean finPartida=false;
+        int izq;
+        int der;
+        boolean salir=false;
         tablero[0] = new Ficha(sacarPrimeraFicha());
         ++ocupado;
         
         boolean quienJuega = true;
         do{              
             do{
-                if(quienJuega){
-                    if(!(jugador1.tieneJugada(tablero[0].getIzq(),tablero[ocupado-1].getDer()))){
+                izq = tablero[0].getIzq();
+                der = tablero[ocupado-1].getDer();
+                if(quienJuega)
+                {
+                    if(!(jugador1.tieneJugada(izq,der))){
                         darComer(jugador1);                        
                     }
-                    if(jugador1.tieneJugada(tablero[0].getIzq(),tablero[ocupado-1].getDer())){
-                        turno(jugador1);                     
+                    if(jugador1.tieneJugada(izq,der)){
+                        salir=turno(jugador1);                     
                     }                    
                     quienJuega = false;
                 }
-                else{
-                    if(!(jugador2.tieneJugada(tablero[0].getIzq(),tablero[ocupado-1].getDer()))){
+                else
+                {
+                    if(!(jugador2.tieneJugada(izq,der))){
                         darComer(jugador2);                        
                     }
-                    if(jugador2.tieneJugada(tablero[0].getIzq(),tablero[ocupado-1].getDer())){
-                        turno(jugador2);
+                    if(jugador2.tieneJugada(izq,der)){
+                        salir=turno(jugador2);
                     }    
                     quienJuega = true;
-                } 
-                if(hayGanador(jugador1,jugador2)){
-                    init();
-                    repartirBarajas();
-                    tablero[0] = new Ficha(sacarPrimeraFicha());
-                    ++ocupado;
-                }
-            }while(!hayGanador(jugador1,jugador2));
-        }while((jugador1.getPuntaje()<100 && jugador2.getPuntaje()<100)&&!finPartida);      
-        return  finPartida;
+                }                 
+            }while(!hayGanador(jugador1,jugador2)&&!salir);
+            if(!salir){
+                interfaz.imprimirTablero(tablero,ocupado,jugador1.getPuntaje(),jugador2.getPuntaje());
+            }
+            if((jugador1.getPuntaje()<100 && jugador2.getPuntaje()<100)&&!salir){
+                init();
+                repartirBarajas();
+                tablero[0] = new Ficha(sacarPrimeraFicha());
+                ++ocupado;
+            }
+        }while((jugador1.getPuntaje()<100 && jugador2.getPuntaje()<100)&&!salir); 
     }  
     
     public void darComer(Jugador jugador)
     {            
-        while(!(jugador.tieneJugada(tablero[0].getIzq(),tablero[ocupado-1].getDer()))&&ultimaFicha>-1){
+        while(!(jugador.tieneJugada(tablero[0].getIzq(),tablero[ocupado-1].getDer())) && ultimaFicha>-1){
             jugador.setFicha(mazo[ultimaFicha--]);
         }
     }
     
-    public void turno(Jugador jugador){
-        interfaz.imprimirTablero(tablero,ocupado,jugador.getPuntaje(),jugador2.getPuntaje());
-        jugada(jugador); 
+    public boolean turno(Jugador jugador){
+        interfaz.imprimirTablero(tablero,ocupado,jugador.getPuntaje(),jugador2.getPuntaje());        
+        return jugada(jugador);
     }
     
-    private void jugada(Jugador jugador)
+    private boolean jugada(Jugador jugador)
     {       
         String[] jugada;
-        boolean err = false;
-        if(jugador instanceof Dummy){
+        boolean err=false;
+        boolean salir=false;        
+        if(jugador instanceof Dummy)
+        {
             do{
-                jugada = interfaz.imprimirBaraja(jugador.getMano(),err);
+                jugada = interfaz.imprimirBaraja(jugador,err);
+                salir = jugada[0].equalsIgnoreCase("s")||jugada[1].equalsIgnoreCase("s");
                 err=false;
-                if(!esJugadaValida(jugador,jugada)){
+                if(!salir&&!esJugadaValida(jugador,jugada)){
                     err=true;
                 }
-            }while(err);
+                else if(!salir&&esJugadaValida(jugador,jugada)){
+                    jugador.hacerJugada(tablero[0].getIzq(),tablero[ocupado-1].getDer());
+                }
+            }while(!(salir||!err)); 
         }
         else{
             jugada = jugador.hacerJugada(tablero[0].getIzq(),tablero[ocupado-1].getDer());
         }  
-        ponerFicha(jugada,jugador);
+        if(!salir){
+            ponerFicha(jugada,jugador);
+        }
+        return salir;
     }
     
     public boolean esJugadaValida(Jugador jugador, String[] jugada)
     {
         boolean valida=false;
-        int izq=jugador.getFicha(Integer.parseInt(jugada[0])).getIzq();
-        int der=jugador.getFicha(Integer.parseInt(jugada[0])).getDer();
-        if(jugada[1].equalsIgnoreCase("i")){
-            valida = izq==tablero[0].getIzq()||der==tablero[0].getIzq();
-        }
-        else if(jugada[1].equalsIgnoreCase("d")){
-            valida = izq==tablero[ocupado-1].getIzq()||der==tablero[ocupado-1].getIzq();
+        int izq;
+        int der;
+        int pos= Integer.parseInt(jugada[0]);
+        if(pos>=0 && pos<21 && jugador.getFicha(pos)!=null)
+        {
+            izq=jugador.getFicha(Integer.parseInt(jugada[0])).getIzq();
+            der=jugador.getFicha(Integer.parseInt(jugada[0])).getDer();                        
+            if(jugada[1].equalsIgnoreCase("i")){
+                valida = izq==tablero[0].getIzq()||der==tablero[0].getIzq();
+            }
+            else if(jugada[1].equalsIgnoreCase("d")){
+                valida = izq==tablero[ocupado-1].getIzq()||der==tablero[ocupado-1].getIzq();
+            }
         }
         return valida;
     }
@@ -254,18 +274,19 @@ public class Dealer
     public boolean hayGanador(Jugador jugador1,Jugador jugador2)
     {
         boolean ganador = false;
-        if(ganador = jugador1.getValor()==0||!jugador2.tieneJugada(tablero[0].getIzq(),tablero[ocupado-1].getDer())){
+        int izq=tablero[0].getIzq();
+        int der=tablero[ocupado-1].getDer();
+        if(ganador= !jugador1.tieneFichas()||(!jugador2.tieneJugada(izq,der)&&!jugador1.tieneJugada(izq,der)&&jugador1.getValor()<jugador2.getValor())){
             jugador1.setPuntaje(jugador2.getValor());
         }
-        else{
-            if(ganador =jugador2.getValor()==0||!jugador1.tieneJugada(tablero[0].getIzq(),tablero[ocupado-1].getDer())){
-                jugador2.setPuntaje(jugador1.getValor());
-            }
-        }        
+        else if(ganador= !jugador2.tieneFichas()||(!jugador2.tieneJugada(izq,der)&&!jugador1.tieneJugada(izq,der)&&jugador2.getValor()<jugador1.getValor())){
+            jugador2.setPuntaje(jugador1.getValor());           
+        }  
+        else if(!jugador2.tieneJugada(izq,der)&&!jugador1.tieneJugada(izq,der)&&jugador2.getValor()==jugador1.getValor()){
+            ganador=true;          
+        } 
         return ganador;
-    }
-    
-    
+    }   
         
     //Ordena el vector para que se pueda insertar una ficha a la izquierda (en la posicion 0)    
     private void ordenarTablero()
