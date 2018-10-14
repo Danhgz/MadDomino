@@ -12,6 +12,7 @@ public class Ficha
     private int der;
     private boolean esPar;
     
+  
     public void setIzq(int izq){
         this.izq = izq;
     }
@@ -20,11 +21,11 @@ public class Ficha
         this.der = der;
         esPar= this.izq == this.der; //lo metí aqui porque es vara hacer un setEsPar xd
     }    
-    
+   
     public int getIzq(){
         return this.izq;
     }
-    
+  
     public int getDer(){
         return this.der;
     }
@@ -32,7 +33,7 @@ public class Ficha
     public boolean getEsPar(){
         return this.esPar;
     }
-    
+   
     public Ficha(Ficha otra){
         init(otra.getIzq(),otra.getDer());
     }
@@ -40,27 +41,42 @@ public class Ficha
     public Ficha(int izq,int der){
         init(izq,der);
     }
-    
+   
     public Ficha(){
     }
-    
+   
     public int getValor(){
         return this.izq + this.der;
     }
-    
+    /*
+     * @Funcion:
+     * @Param:
+     * @Param:
+     * @Return:
+     */
     private void init(int izq, int der)
     {
         this.izq = izq;
         this.der = der;
         esPar= this.izq == this.der;
     }
-    
+    /*
+     * @Funcion:
+     * @Param:
+     * @Param:
+     * @Return:
+     */
     public void swap(){
         int temp = this.izq;
         der = izq;
         izq = temp;
     }
-    
+    /*
+     * @Funcion:
+     * @Param:
+     * @Param:
+     * @Return:
+     */
     public String toString(){
         return "["+izq+"|"+der+"]";
     }

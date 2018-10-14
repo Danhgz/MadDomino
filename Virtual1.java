@@ -35,7 +35,12 @@ public class Virtual1 implements Jugador
     public Ficha[] getMano(){
         return baraja;
     }
-    
+    /*
+     * @Funcion:
+     * @Param:
+     * @Param:
+     * @Return:
+     */
     private String[] extremosIguales(int izq, int der){
         String []resultado = new String[2];
         for(int i = 0; i < ocupado; ++i){
@@ -71,12 +76,22 @@ public class Virtual1 implements Jugador
         }
         return resultado;
     }
-    
+    /*
+     * @Funcion:
+     * @Param:
+     * @Param:
+     * @Return:
+     */
     public String[] hacerJugada(int izq, int der)
     {
         return extremosIguales(izq , der);
     }
-    
+    /*
+     * @Funcion:
+     * @Param:
+     * @Param:
+     * @Return:
+     */
     public boolean tieneJugada(int izq, int der)
     {
         boolean tiene=false;
@@ -87,6 +102,12 @@ public class Virtual1 implements Jugador
     }
     
     //Verifica si tiene una ficha par
+    /*
+     * @Funcion:
+     * @Param:
+     * @Param:
+     * @Return:
+     */
     public boolean tienePar(){
         boolean existe = false;
         int i = 0;
@@ -97,7 +118,12 @@ public class Virtual1 implements Jugador
         
         return existe;
     }
-    
+    /*
+     * @Funcion:
+     * @Param:
+     * @Param:
+     * @Return:
+     */
     public void sacarFicha(int i){
         baraja[i] = null;
     }
@@ -114,26 +140,7 @@ public class Virtual1 implements Jugador
         return suma;
     }
     
-    /*public void comer()
-    {
-        Ficha[] barajaAux = new Ficha[baraja.length+1];
-        for(int i=0; i<barajaAux.length; ++i)
-        {         
-            barajaAux[i]= new Ficha();
-            if(i<barajaAux.length-1){                
-                barajaAux[i]= baraja[i];
-            }
-            else{                
-                barajaAux[i] = dealer.repartir();
-            }
-        }
-        baraja = new Ficha[barajaAux.length];
-        for(int i=0; i<baraja.length; ++i)
-        {
-            baraja[i]= new Ficha();
-            baraja[i]= barajaAux[i];
-        }
-    }*/
+  
     
 }
 

@@ -19,13 +19,24 @@ public class Dealer
     public Dealer(){
         init();
     }
-    
+    /*
+     * @Funcion:
+     * @Param:
+     * @Param:
+     * @Return:
+     */
     private void init(){
         hacerMazo();
         interfaz = new Interfaz();     
         tablero = new Ficha[28];
         ocupado = 0;
-    }    
+    }  
+    /*
+     * @Funcion:
+     * @Param:
+     * @Param:
+     * @Return:
+     */
     private void hacerMazo(){
         mazo = new Ficha[28]; 
         ultimaFicha = mazo.length - 1;
@@ -42,13 +53,23 @@ public class Dealer
         }
         mezclar();
     }
-
+    /*
+     * @Funcion:
+     * @Param:
+     * @Param:
+     * @Return:
+     */
     public Ficha repartir()
     {           
         return mazo[ultimaFicha--];
     }
 
-    
+    /*
+     * @Funcion:
+     * @Param:
+     * @Param:
+     * @Return:
+     */
     private void mezclar(){
         int x; 
         int y;

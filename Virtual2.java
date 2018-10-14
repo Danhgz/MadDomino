@@ -37,7 +37,12 @@ public class Virtual2 implements Jugador
     public Ficha[] getMano(){
         return baraja;
     }   
-
+    /*
+     * @Funcion:
+     * @Param:
+     * @Param:
+     * @Return:
+     */
     public String[] hacerJugada(int izq, int der)
     {
         String[] jugada = new String[2];
@@ -47,7 +52,12 @@ public class Virtual2 implements Jugador
         }
         return jugada;
     }
-    
+    /*
+     * @Funcion:
+     * @Param:
+     * @Param:
+     * @Return:
+     */
     public boolean tieneJugada(int izq, int der)
     {
         boolean tiene=false;
@@ -58,6 +68,12 @@ public class Virtual2 implements Jugador
     }
     
     //Verifica si tiene una ficha par
+    /*
+     * @Funcion:
+     * @Param:
+     * @Param:
+     * @Return:
+     */
     public boolean tienePar(){
         boolean existe = false;
         int i = 0;
@@ -68,7 +84,12 @@ public class Virtual2 implements Jugador
         
         return existe;
     }
-    
+    /*
+     * @Funcion:
+     * @Param:
+     * @Param:
+     * @Return:
+     */
     public void sacarFicha(int i){
         baraja[i] = null;
         for(int j=i;j<ocupado;++j)
@@ -77,7 +98,12 @@ public class Virtual2 implements Jugador
         }
         --ocupado;
     }
-    
+    /*
+     * @Funcion:
+     * @Param:
+     * @Param:
+     * @Return:
+     */
     private void swap(int x, int y){
         Ficha temp = baraja[x];
         baraja[x] = baraja[y];

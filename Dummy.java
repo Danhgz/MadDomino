@@ -50,7 +50,12 @@ public class Dummy implements Jugador
     public Ficha[] getMano(){
         return baraja;
     }
-    
+    /*
+     * @Funcion:
+     * @Param:
+     * @Param:
+     * @Return:
+     */
     public void sacarFicha(int i){
         baraja[i] = null;
         for(int j=i;j<ocupado;++j)
@@ -59,7 +64,12 @@ public class Dummy implements Jugador
         }
         --ocupado;
     }
-    
+    /*
+     * @Funcion:
+     * @Param:
+     * @Param:
+     * @Return:
+     */
     private void swap(int x, int y){
         Ficha temp = baraja[x];
         baraja[x] = baraja[y];
@@ -67,6 +77,12 @@ public class Dummy implements Jugador
     } 
     
     //Verifica si tiene una ficha par
+    /*
+     * @Funcion:
+     * @Param:
+     * @Param:
+     * @Return:
+     */
     public boolean tienePar(){
         boolean existe = false;
         int i = 0;
@@ -77,12 +93,22 @@ public class Dummy implements Jugador
         
         return existe;
     }   
-    
+    /*
+     * @Funcion:
+     * @Param:
+     * @Param:
+     * @Return:
+     */
     public String[] hacerJugada(int izq, int der)
     {
         return new String[]{"",""};
     }
-    
+    /*
+     * @Funcion:
+     * @Param:
+     * @Param:
+     * @Return:
+     */
     public boolean tieneJugada(int izq, int der)
     {
         boolean tiene=false;
