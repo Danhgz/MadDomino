@@ -40,11 +40,34 @@ public class Virtual3 implements Jugador
     public Ficha[] getMano(){
         return baraja;
     }
-    
+        
+    private boolean sePuedeJugar(int i, int lado){
+	return baraja[i].getIzq() == lado || baraja[i].getDer() == lado; 
+    }
 
-    public String[] hacerJugada(int zq, int der)
-    {
-        return new String[]{"",""};
+    public String[] hacerJugada(int izq, int der)
+    {       
+	String[] jugada = new String[2];
+	Ficha fichaMasGrande = new Ficha(-1,-1);
+	for(int i = 0; i < ocupado ; ++i){
+	    if(sePuedeJugar(i, izq) && baraja[i].getValor() > fichaMasGrande.getValor()){
+	        fichaMasGrande = baraja[i];
+		if(baraja[i].getIzq() == izq){
+		    baraja[i].swap();	
+		}
+		jugada[0] = "" + i;
+		jugada[1] = "I";
+            }
+            else if(sePuedeJugar(i, der) && baraja[i].getValor() > fichaMasGrande.getValor()){
+		fichaMasGrande = baraja[i];
+		if(baraja[i].getDer() == der){
+		    baraja[i].swap();
+                }
+                jugada[0] = "" + i;
+                jugada[1] = "D";		
+            }
+	}
+	return jugada;	
     }
     
     public boolean tieneJugada(int izq, int der)
