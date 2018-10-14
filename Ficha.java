@@ -49,10 +49,9 @@ public class Ficha
         return this.izq + this.der;
     }
     /*
-     * @Funcion:
-     * @Param:
-     * @Param:
-     * @Return:
+     * @Funcion: inicializar los valores de la ficha
+     * @Param: valor izquierdo de la ficha
+     * @Param: valor derecho de la ficha
      */
     private void init(int izq, int der)
     {
@@ -61,10 +60,7 @@ public class Ficha
         esPar= this.izq == this.der;
     }
     /*
-     * @Funcion:
-     * @Param:
-     * @Param:
-     * @Return:
+     * @Funcion: cambiar el valor de la izquierda con la derecha y viceversa
      */
     public void swap(){
         int temp = this.izq;
@@ -72,10 +68,8 @@ public class Ficha
         izq = temp;
     }
     /*
-     * @Funcion:
-     * @Param:
-     * @Param:
-     * @Return:
+     * @Funcion: Imprimir la ficha
+     * @Return: String con la ficha
      */
     public String toString(){
         return "["+izq+"|"+der+"]";

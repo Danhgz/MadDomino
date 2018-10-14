@@ -5,11 +5,12 @@
  * @version (a version number or a date)
  */
 public interface Jugador
-{
-    
+{    
     void setFicha(Ficha ficha);
     
     public int getPuntaje();
+    
+    public String getNombre();
     
     public void setPuntaje(int puntaje);
     
@@ -25,9 +26,9 @@ public interface Jugador
     
     public boolean tieneJugada(int izq, int der);
     
-    public int getValor();
+    public boolean tieneFichas();
     
-
+    public int getValor();   
 }
 
 
