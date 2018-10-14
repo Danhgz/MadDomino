@@ -42,13 +42,71 @@ public class Virtual2 implements Jugador
     public Ficha[] getMano(){
         return baraja;
     }   
-
+    
+    private boolean sePuedeJugar(int i, int lado){
+	return baraja[i].getIzq() == lado || baraja[i].getDer() == lado; 
+    }
     public String[] hacerJugada(int izq, int der)
     {
-        String[] jugada = new String[2];
-        for(int i=0;i<baraja.length;++i)
+        String[] jugada = {"-1","-1"};
+        String jugables="";
+        int posMayor;
+        int posMenor;
+        String mayorStr="";
+        String menorStr="";
+        if(izq>der){
+            posMayor=izq;
+            posMenor=der;
+            mayorStr= "I";
+            menorStr="D";
+        }
+        else{
+            posMayor=der;
+            posMenor=izq;
+            mayorStr= "D";
+            menorStr="I";
+        }
+        
+        for(int i=0;i<ocupado;++i)//Si hay pares
         {
-            
+            if(baraja[i].getEsPar() && baraja[i].getIzq() == posMayor){
+                jugada[0] = "" + i;
+                jugada[1] = mayorStr;
+            }
+            else if(baraja[i].getEsPar() && baraja[i].getIzq() == posMenor ){
+                jugada[0] = "" + i;
+                jugada[1] = menorStr;
+            } 
+            else if(sePuedeJugar(i,posMayor)||sePuedeJugar(i,posMayor)){//Marca las fichas probables si no hay pares
+                jugables+= ""+i;
+            }            
+        }
+        
+        if(jugada[0].equals("-1")){//Si no hay jugada todavia
+            char[] pos = jugables.toCharArray();
+            int posInt;
+            jugada[0]= ""+pos[0]; 
+            for(int i=0;i<pos.length;++i){
+                posInt= Integer.parseInt(String.valueOf(pos[i]));
+                if(baraja[posInt].getValor() > baraja[Integer.parseInt(jugada[0])].getValor()){
+                    jugada[0] = "" + pos[i];
+                }           
+            }
+            int mejorFicha= Integer.parseInt(jugada[0]);
+            if(baraja[mejorFicha].getIzq() == der){
+               jugada[1] = "D";
+            }
+            else  if(baraja[mejorFicha].getDer() == izq){
+               jugada[1] = "I";
+            }
+                else if(baraja[mejorFicha].getDer() == der ){
+                    baraja[mejorFicha].swap();
+                    jugada[1] = "D";
+                }
+                    else if(baraja[mejorFicha].getIzq() == izq ){
+                        baraja[mejorFicha].swap();
+                        jugada[1] = "I";
+                    }
         }
         return jugada;
     }
